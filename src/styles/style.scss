@@ -1,0 +1,20 @@
+@import "../../node_modules/antd/dist/antd.css";
+@import "./VsCodeStyle.scss";
+
+.layout-content {
+    height: 80vh;
+    padding: 20px;
+}
+
+.layout-header {
+    height: 10vh;
+}
+
+.layout-footer {
+    height: 10vh;
+}
+
+.card-home {
+    height: 100%
+}
+

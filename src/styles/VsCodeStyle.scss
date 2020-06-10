@@ -1,0 +1,274 @@
+///////////////// Variables ////////////////
+
+///Colors
+$textDark: #fff;
+$textDarkSecondary: #828182;
+$textDarkLink: #2c94f1;
+$topBarBg: #3c3c3c;
+$primaryColor: #007acc;
+$secondaryColor: #16825d;
+$contentBg: #1e1e1e;
+$authorColor: #5ac983;
+$dateColor: #b79975;
+
+///Sizes
+$barHeightTop: 2.5vw;
+$barHeightBottom: 2vw;
+$contentHeight: 95.5vw;
+
+$minBarHeightTop: 3.5vh;
+$minBarHeightBottom: 3vh;
+$minContentHeight: 93.5vh;
+
+$maxBarHeightTop: 3.5vh;
+$maxBarHeightBottom: 3vh;
+$maxContentHeight: 93.5vh;
+
+$authorDateSize: 8rem;
+
+///Headers
+
+
+
+
+///////////////// Layout ////////////////
+
+
+.vscodemain {
+max-height: 100vh;
+overflow: hidden;
+}
+
+.vscodetopbar {
+    height: $barHeightTop;
+    min-height: $minBarHeightTop;
+    max-height: $maxBarHeightTop;
+    background-color: $topBarBg;
+    line-height: $maxBarHeightTop;
+    // 0px 1vw 0vw 1vw
+    padding: 0 0 0 1.5rem;
+}
+
+.vscodesidebaricons {
+    height: $contentHeight;
+    min-height: $minContentHeight;
+    max-height: $maxContentHeight;
+    background-color: #333333;
+    position: 'fixed';
+    color: $textDarkSecondary;
+}
+
+.vscodesidebar {
+    height: $contentHeight;
+    min-height: $minContentHeight;
+    max-height: $maxContentHeight;
+    background-color: #252526;
+    position: 'fixed';
+
+}
+
+.vscodecontent  {
+    height: $contentHeight;
+    min-height: $minContentHeight;
+    max-height: $maxContentHeight;
+    background-color: $contentBg;
+    color: $textDark;
+}
+
+.vscodebottombar {
+    height: $barHeightBottom;
+    min-height: $minBarHeightBottom;
+    max-height: $maxBarHeightBottom;
+    background-color: $primaryColor;
+    // line-height: $barHeight;
+    color: $textDark;
+    padding: 0 0 0 0;
+
+}
+
+.vscodebottombarleft {
+    background-color: $secondaryColor;
+    padding: 0 0.5vw 0 0.5vw;
+    line-height: $barHeightBottom;
+
+
+}
+
+///////////////// Menu ////////////////
+
+.vscodesidebariconsmenuitem {
+    background-color: #333333;
+    color: $textDarkSecondary;
+    border: 0;
+
+    
+}
+
+.vscodesidebariconsmenuitem svg {
+    color: $textDarkSecondary;
+    svg :active {
+        color: $textDarkLink;        
+    }
+}
+
+.vscodesidebarmenuitem a {
+    background-color: #333333;
+    color: $textDark;
+}
+.vscodesidebarmenuitem {
+    background-color: #333333;
+    
+}
+
+.vscodetopbarmenuitem {
+    background-color: $topBarBg;
+    color: $textDarkSecondary;
+    line-height: $barHeightTop;
+    border: 0;
+}
+
+.vscodebottombarmenuitem {
+    background-color: $primaryColor;
+    color: $textDark;
+    line-height: $barHeightBottom;
+
+}
+
+///////////////// Components ////////////////
+
+/// Home
+
+.homeContentCard {
+    width: 100%;
+    height: 100%;
+    background-color: #1e1e1e;
+    color: $textDark;
+    padding: 5vh;
+    border: 0;
+}
+
+.homeContentCardHeader {
+    color: $textDark;
+}
+
+.contentBlockLeft {
+    width: 50%;
+    height: 100%;
+}
+
+.contentBlockRight {
+    width: 50%;
+    height: 100%;
+}
+
+.contentBlockBlog {
+    height: 50%;
+    width: 100%;
+}
+
+.contentBlockRecent {
+    height: 20vh;
+    width: 100%;
+}
+
+.contentBlockPortfolio {
+    height: 50%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.contentBlockCustomize {
+    height: 40vh;
+    width: 100%;
+}
+
+.contentBlockConnect {
+    height: 40vh;
+    width: 100%;
+}
+
+.contentList {
+    color: $textDark;
+}
+
+.card-post {
+    padding: 1vh;
+    text-align: center;
+    min-height: 80vh;
+    background-color: #252526;
+    border: $contentBg;
+    color: $textDark;
+    h1 {
+        color: $textDark;
+    }
+    h2 {
+        color: $textDark;
+    }
+    p {
+        font-size: 16px;
+    }
+}
+
+.card-post-category {
+    padding: 1vh;
+    text-align: center;
+    min-height: 80vh;
+    background-color: $contentBg;
+    border: $contentBg;
+    color: $textDark;
+    h1 {
+        color: $textDark;
+    }
+    h2 {
+        color: $textDark;
+    }
+}
+
+.card-block {
+    margin: 5%;
+    background-color: $contentBg;
+    border: $contentBg;
+    color: $textDark;
+    height: 100%;
+    div {
+        color: $textDark;
+    }
+}
+
+.ant-tabs-bar {
+    background-color: #252526;
+    border: 0;
+}
+
+.ant-tabs-tab  {
+    background-color: $contentBg;
+}
+
+.ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab-active {
+    background-color: $contentBg;
+    background: $contentBg;
+    color: $textDark;
+    border: 0;
+}
+
+.ant-page-header-heading-title {
+    color:$textDark;
+}
+
+.two-col {
+    width: 50%;
+}
+
+
+
+.author {
+    color: $authorColor;
+}
+
+.date-style {
+    color: $dateColor;
+}
+
+.contact-modal {
+    z-index: 999;
+}
