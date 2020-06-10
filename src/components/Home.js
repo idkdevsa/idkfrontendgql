@@ -1,15 +1,14 @@
-import React, { Component, useState, useEffect } from 'react';
-import { withApollo } from 'react-apollo';
-import gql from 'graphql-tag';
-import { Link } from 'react-router-dom';
-import { createHttpLink } from 'apollo-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { ApolloClient } from 'apollo-boost';
-import { AUTH_TOKEN } from '../constants';
-import Config from '../config';
-import { ReactComponent as Logo } from '../static/images/starter-kit-logo.svg';
+import React, { useState, useEffect } from "react";
+import { withApollo } from "react-apollo";
+import gql from "graphql-tag";
+import { Link } from "react-router-dom";
+import { createHttpLink } from "apollo-link-http";
+import { InMemoryCache } from "apollo-cache-inmemory";
+import { ApolloClient } from "apollo-boost";
+import { AUTH_TOKEN } from "../constants";
+import Config from "../CustomHooks/ApolloHooksWP/config";
 
-import { Row, Col, Card, Tabs } from 'antd';
+import { Row, Col, Card, Tabs } from "antd";
 
 /**
  * GraphQL page query
@@ -70,9 +69,9 @@ const PROTECTED_QUERY = gql`
   }
 `;
 
-const Home = props => {
+const Home = (props) => {
   const [userId, setUserId] = useState(null);
-  const [page, setPage] = useState({ title: '', content: '' });
+  const [page, setPage] = useState({ title: "", content: "" });
   const [pagesPosts, setPagesPosts] = useState({ pages: [], posts: [] });
 
   // used as a authenticated GraphQL client
@@ -108,7 +107,7 @@ const Home = props => {
       .query({
         query: PROTECTED_QUERY,
       })
-      .catch(err => {
+      .catch((err) => {
         error = err;
       });
     if (!error) {
@@ -128,7 +127,7 @@ const Home = props => {
     const { match, client } = props;
     let uri = match.params.slug;
     if (!uri) {
-      uri = 'welcome';
+      uri = "welcome";
     }
     const result = await client.query({
       query: PAGE_QUERY,
@@ -147,14 +146,14 @@ const Home = props => {
       query: PAGES_AND_CATEGORIES_QUERY,
     });
     let posts = result.data.posts.edges;
-    posts = posts.map(post => {
+    posts = posts.map((post) => {
       const finalLink = `/post/${post.node.slug}`;
       const modifiedPost = { ...post };
       modifiedPost.node.link = finalLink;
       return modifiedPost;
     });
     let pages = result.data.pages.edges;
-    pages = pages.map(page => {
+    pages = pages.map((page) => {
       const finalLink = `/page/${page.node.slug}`;
       const modifiedPage = { ...page };
       modifiedPage.node.link = finalLink;
@@ -166,10 +165,10 @@ const Home = props => {
 
   // filter posts based on category name of post
 
-  const postFilter = val => {
-    let posts = pagesPosts.posts.map(post => post.node);
-    let result = posts.filter(a =>
-      a.categories.nodes.some(c => c.slug.includes(val)),
+  const postFilter = (val) => {
+    let posts = pagesPosts.posts.map((post) => post.node);
+    let result = posts.filter((a) =>
+      a.categories.nodes.some((c) => c.slug.includes(val))
     );
     return result;
   };
@@ -178,7 +177,7 @@ const Home = props => {
     <Card
       className="homeContentCard"
       // title="Jason Bolton - Full Stack Developer"
-      headStyle={{ color: 'white' }}
+      headStyle={{ color: "white" }}
     >
       <Row>
         <Col
@@ -190,7 +189,7 @@ const Home = props => {
           <Row>
             <Col className="contentBlockBlog">
               <h3>Blog</h3>
-              {postFilter('blog').map((post, index) => (
+              {postFilter("blog").map((post, index) => (
                 <li key={post.slug}>
                   <Link to={post.link}>{post.title}</Link>
                 </li>
@@ -201,7 +200,7 @@ const Home = props => {
           <Row>
             <Col className="contentBlockPortfolio">
               <h3>Projects</h3>
-              {postFilter('projects').map((post, index) => (
+              {postFilter("projects").map((post, index) => (
                 <li key={post.slug}>
                   <Link to={post.link}>{post.title}</Link>
                 </li>

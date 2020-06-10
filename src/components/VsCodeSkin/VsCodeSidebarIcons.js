@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { Button, Tooltip, Menu, Layout } from 'antd';
-import { CommentOutlined, UserOutlined } from '@ant-design/icons';
-import VsCodeSidebar from './VsCodeSidebar';
+import React, { useState } from "react";
+import { Button, Tooltip, Menu, Layout } from "antd";
+import { CommentOutlined, UserOutlined } from "@ant-design/icons";
+import VsCodeSidebar from "./VsCodeSidebar";
 
 const VsCodeSidebarIcons = () => {
   const [menuCollapse, setMenuCollapse] = useState(true);
-  const [curMenu, setCurMenu] = useState('blog');
+  const [curMenu, setCurMenu] = useState("blog");
 
   // Handle behavior of main sidebar and set current menu
-  const handleMenuCollapse = curMenuSelection => {
+  const handleMenuCollapse = (curMenuSelection) => {
     setMenuCollapse(
       curMenuSelection !== curMenu && menuCollapse === false
         ? false
@@ -16,14 +16,16 @@ const VsCodeSidebarIcons = () => {
         ? false
         : curMenuSelection === curMenu && menuCollapse === false
         ? true
-        : false,
+        : false
     );
     setCurMenu(curMenuSelection);
   };
 
+  // define side bar menu icon keys
+
   const menuItems = {
-    Blog: 'blog',
-    Projects: 'projects',
+    Blog: "blog",
+    Projects: "projects",
   };
 
   return (
@@ -39,7 +41,7 @@ const VsCodeSidebarIcons = () => {
               <Button
                 type="link"
                 ghost
-                icon={<CommentOutlined style={{ fontSize: '2rem' }} />}
+                icon={<CommentOutlined style={{ fontSize: "2rem" }} />}
               />
             </Tooltip>
           </Menu.Item>
@@ -48,7 +50,7 @@ const VsCodeSidebarIcons = () => {
               <Button
                 type="link"
                 ghost
-                icon={<UserOutlined style={{ fontSize: '2rem' }} />}
+                icon={<UserOutlined style={{ fontSize: "2rem" }} />}
               />
             </Tooltip>
           </Menu.Item>

@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { Menu, Row, Col, Layout, Button } from 'antd';
-import { QuestionCircleOutlined, HomeOutlined } from '@ant-design/icons';
-import { withRouter } from 'react-router';
-import ContactModal from './ContactModal';
-import { Link } from 'react-router-dom';
-import VsCodeBreadcrumb from './VsCodeBreadcrumb';
+import React, { useState } from "react";
+import { Menu, Row, Col, Layout, Button } from "antd";
+import { QuestionCircleOutlined, HomeOutlined } from "@ant-design/icons";
+import { withRouter } from "react-router";
+import ContactModal from "../ContactModal";
+import { Link } from "react-router-dom";
+import VsCodeBreadcrumb from "./VsCodeBreadcrumb";
 
-const VsCodeTopBar = props => {
+const VsCodeTopBar = (props) => {
   return (
     <>
       <Layout.Header className="vscodetopbar">

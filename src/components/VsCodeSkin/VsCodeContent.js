@@ -1,15 +1,15 @@
-import React from 'react';
-import { withApollo } from 'react-apollo';
+import React from "react";
+import { withApollo } from "react-apollo";
 
-import { Card, Avatar, Layout } from 'antd';
+import { Card, Avatar, Layout } from "antd";
 import {
   EditOutlined,
   EllipsisOutlined,
   SettingOutlined,
-} from '@ant-design/icons';
-import useCategory from './useCategory';
+} from "@ant-design/icons";
+import useCategory from "../useCategory";
 
-const VsCodeContent = props => {
+const VsCodeContent = (props) => {
   const [category] = useCategory(props);
   console.log(category);
 

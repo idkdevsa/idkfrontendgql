@@ -2,6 +2,11 @@ import React from "react";
 import { Row, Col, Menu, Layout } from "antd";
 
 const VsCodeBottomBar = () => {
+  /*
+   * Render footer
+   * TODO add button to change skin
+   */
+
   return (
     <Layout.Footer className="vscodebottombar">
       <Row>

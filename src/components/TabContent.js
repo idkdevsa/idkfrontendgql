@@ -1,10 +1,10 @@
-import React from 'react';
-import { Layout, Tabs, Row, Col } from 'antd';
-import { withRouter } from 'react-router';
-import { withApollo } from 'react-apollo';
-import VsCodeBreadcrumb from './VsCodeBreadcrumb';
+import React from "react";
+import { Layout, Tabs, Row, Col } from "antd";
+import { withRouter } from "react-router";
+import { withApollo } from "react-apollo";
+import VsCodeBreadcrumb from "./VsCodeSkin/VsCodeBreadcrumb";
 
-const TabContent = props => {
+const TabContent = (props) => {
   //   const tabArr = props.children.props.children.map((child, index) => (
   //     <div key={index}>{child}</div>
   //   ));

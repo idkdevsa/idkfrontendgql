@@ -1,22 +1,22 @@
-import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import React from "react";
+import { Switch, Route } from "react-router-dom";
 
-import Home from './Home';
-import Login from './Login';
-import Search from './Search';
-import Page from './Page';
-import Post from './Post';
-import Category from './Category';
-import VsCodeTopBar from './VsCodeTopBar';
-import VsCodeBottomBar from './VsCodeBottomBar';
-import VsCodeSidebarIcons from './VsCodeSidebarIcons';
+import Home from "./Home";
+import Login from "./Login";
+import Search from "./Search";
+import Page from "./Page";
+import Post from "./Post";
+import Category from "./Category";
+import VsCodeTopBar from "./VsCodeSkin/VsCodeTopBar";
+import VsCodeBottomBar from "./VsCodeSkin/VsCodeBottomBar";
+import VsCodeSidebarIcons from "./VsCodeSkin/VsCodeSidebarIcons";
 
-import TabContent from './TabContent';
-import { Layout } from 'antd';
-import VsCodeBreadcrumb from './VsCodeBreadcrumb';
+import TabContent from "./TabContent";
+import { Layout } from "antd";
+import VsCodeBreadcrumb from "./VsCodeSkin/VsCodeBreadcrumb";
 // import Tags from './Tags';
 
-const App = props => {
+const App = (props) => {
   return (
     <Layout className="vscodemain">
       <VsCodeTopBar />
