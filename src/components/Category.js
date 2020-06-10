@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { withApollo } from 'react-apollo';
-import gql from 'graphql-tag';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { withApollo } from "react-apollo";
+import gql from "graphql-tag";
+import { Link } from "react-router-dom";
 
-import { Card, Row, Col, Divider } from 'antd';
-import useLoadingSpinner from './useLoadingSpinner';
+import { Card, Row, Col, Divider } from "antd";
+import useLoadingSpinner from "./useLoadingSpinner";
 
 /**
  * GraphQL category query that takes a category slug as a filter
@@ -60,8 +60,8 @@ const CATEGORY_QUERY = gql`
 /**
  * Fetch and display a Category
  */
-const Category = props => {
-  const [category, setCategory] = useState({ name: '', posts: [] });
+const Category = (props) => {
+  const [category, setCategory] = useState({ name: "", posts: [] });
 
   const [{ isLoading }, renderSpin, handleLoading] = useLoadingSpinner();
 
@@ -81,13 +81,13 @@ const Category = props => {
         });
         let name = result.data.categories.edges[0].node.name;
         let posts = result.data.posts.edges;
-        posts = posts.map(post => {
+        posts = posts.map((post) => {
           const finalLink = `/post/${post.node.slug}`;
           const modifiedPost = { ...post };
           modifiedPost.node.link = finalLink;
           return modifiedPost;
         });
-        setCategory({ name, posts } || { name: '', posts: [] });
+        setCategory({ name, posts } || { name: "", posts: [] });
         handleLoading(false);
       } catch (error) {
         console.log(error);
@@ -95,6 +95,9 @@ const Category = props => {
     };
     executeCategoryQuery();
   }, [props]);
+
+  // render custom card title
+  // TODO replace Antd card with custom component
 
   const renderCardTitle = ({ link, title }) => {
     return <Link to={link}>{title}</Link>;
@@ -127,7 +130,7 @@ const Category = props => {
                   />
                   <Row>
                     <Col>
-                      {post.node.tags.edges.map(tag => (
+                      {post.node.tags.edges.map((tag) => (
                         <div key={tag.node.tagId}>{tag.node.name}</div>
                       ))}
                     </Col>

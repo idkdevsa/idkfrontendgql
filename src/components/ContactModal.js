@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Modal } from 'antd';
-import { Form, Input, InputNumber, Button } from 'antd';
+import React, { useState } from "react";
+import { Modal } from "antd";
+import { Form, Input, InputNumber, Button } from "antd";
 
 const ContactModal = () => {
   const [visible, setVisible] = useState(false);
@@ -32,7 +32,16 @@ const ContactModal = () => {
         onOk={handleOk}
         onCancel={handleCancel}
       >
-        <Form name="nest-messages" onFinish={onFinish}>
+        <div>
+          <span>Contact me on </span>
+          <a href="mailto:jason@idkdev.co.za">jason@idkdev.co.za</a>
+        </div>
+
+        {/**
+         * TODO handle contact form submission
+         */}
+
+        {/* <Form name="nest-messages" onFinish={onFinish}>
           <Form.Item
             name={['user', 'name']}
             label="Name"
@@ -57,7 +66,7 @@ const ContactModal = () => {
               Submit
             </Button>
           </Form.Item>
-        </Form>
+        </Form> */}
       </Modal>
     </>
   );
