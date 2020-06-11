@@ -1,5 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { AiOutlineHome } from "react-icons/ai";
+import {
+  GrCss3,
+  GrGraphQl,
+  GrHtml5,
+  GrJs,
+  GrCafeteria,
+  GrReactjs,
+  GrWordpress,
+} from "react-icons/gr";
 
 export const RenderHtml = (val) => {
   return (
@@ -12,8 +22,50 @@ export const RenderHtml = (val) => {
   );
 };
 
+export const RenderTags = (tagValues) => {
+  const tags = [
+    {
+      tagName: "css",
+      icon: <GrCss3 />,
+    },
+    {
+      tagName: "graphql",
+      icon: <GrGraphQl />,
+    },
+    {
+      tagName: "html",
+      icon: <GrHtml5 />,
+    },
+    {
+      tagName: "food",
+      icon: <GrCafeteria />,
+    },
+    {
+      tagName: "javascript",
+      icon: <GrJs />,
+    },
+    {
+      tagName: "reactjs",
+      icon: <GrReactjs />,
+    },
+    {
+      tagName: "wordpress",
+      icon: <GrWordpress />,
+    },
+  ];
+  const filteredTags = tags.filter((tag) => tagValues.includes(tag.tagName));
+
+  return filteredTags.map((tag) => tag.icon);
+};
+
 export const MainLayout = ({ children }) => {
   return <div className="vscodemain">{children}</div>;
+};
+
+export const ContentLayout = ({ children }) => {
+  return (
+    <div className="vscodecontent overflow-y-scroll w-100">{children}</div>
+  );
 };
 
 export const HomeBlockLayout = ({ title, children }) => {
@@ -51,7 +103,14 @@ export const PostCardLayout = ({ title, children }) => {
   );
 };
 
-export const PostCard = ({ title, titleLink, description, imgSrc, imgAlt }) => {
+export const PostCard = ({
+  title,
+  titleLink,
+  description,
+  tags,
+  imgSrc,
+  imgAlt,
+}) => {
   return (
     <article className="br2 ba dark-gray b--black-10 mv4 w-100 w-50-m mw5 center">
       <img src={imgSrc} className="db w-100 br2 br--top" alt={imgAlt} />
@@ -64,6 +123,7 @@ export const PostCard = ({ title, titleLink, description, imgSrc, imgAlt }) => {
           </div>
         </div>
         <div className="f6 lh-copy measure mt2 white">{description}</div>
+        <div className="f4 lh-copy measure mt2 white">{tags}</div>
       </div>
     </article>
   );
@@ -124,13 +184,33 @@ export const PostLayout = ({
   );
 };
 
+export const TopBar = () => {
+  return (
+    <nav className="vscodetopbar db dt-l w-100 border-box vs-topbar-bg overflow-hidden">
+      <div className="fl w-10">
+        <Link to="/" title="Home">
+          <AiOutlineHome className="dib w2 pl1 ml3 h2 br-100" alt="idkdev" />
+        </Link>
+      </div>
+      <div className="fl w-90 db dtc-l v-mid tc tl-l">
+        <span className="vs-text-c">Jason Bolton - Web Developer</span>
+        <span className="vs-text-c">
+          <a href="mailto:jason@idkdev.co.za"> - Contact</a>
+        </span>
+      </div>
+    </nav>
+  );
+};
+
 export const BottomBar = () => {
   return (
-    <footer className="mw-100 h1">
+    <footer className="mw-100">
       <div className="fl w-10 vs-secondary-bg">
-        <p className="f6 db tc">VsCodeSkin</p>
+        <p className="tc">VsCodeSkin</p>
       </div>
-      <div className="fl w-90 vs-primary-bg">WIP</div>
+      <div className="fl w-90 vs-primary-bg">
+        <p className="tc">// Always under construction</p>
+      </div>
     </footer>
   );
 };

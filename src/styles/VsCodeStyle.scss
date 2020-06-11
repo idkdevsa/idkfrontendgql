@@ -74,13 +74,12 @@ overflow: hidden;
 }
 
 .vscodetopbar {
-    height: $barHeightTop;
     min-height: $minBarHeightTop;
     max-height: $maxBarHeightTop;
-    background-color: $topBarBg;
-    line-height: $maxBarHeightTop;
-    // 0px 1vw 0vw 1vw
-    padding: 0 0 0 1.5rem;
+    // background-color: $topBarBg;
+    // line-height: $maxBarHeightTop;
+    // // 0px 1vw 0vw 1vw
+    // padding: 0 0 0 1.5rem;
 }
 
 .vscodesidebaricons {
@@ -102,12 +101,10 @@ overflow: hidden;
 }
 
 .vscodecontent  {
-    height: $contentHeight;
     min-height: $minContentHeight;
     max-height: $maxContentHeight;
     background-color: $contentBg;
-    color: $textDark;
-}
+ }
 
 .vscodebottombar {
     height: $barHeightBottom;

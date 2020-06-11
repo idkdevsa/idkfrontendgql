@@ -7,7 +7,11 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { ApolloClient } from "apollo-boost";
 import { AUTH_TOKEN } from "../constants";
 import Config from "../CustomHooks/ApolloHooksWP/config";
-import { HomeBlock, HomeBlockLayout } from "./VsCodeSkin/VsCodeComponents";
+import {
+  HomeBlock,
+  HomeBlockLayout,
+  RenderTags,
+} from "./VsCodeSkin/VsCodeComponents";
 
 /**
  * GraphQL page query
@@ -162,7 +166,7 @@ const Home = (props) => {
     setPagesPosts({ posts, pages });
   };
 
-  // filter posts based on category name of post
+  // filter posts based on category name
 
   const postFilter = (val) => {
     let posts = pagesPosts.posts.map((post) => post.node);
@@ -173,7 +177,7 @@ const Home = (props) => {
   };
 
   return (
-    <HomeBlockLayout title={"Jason Bolton - Web Developer"}>
+    <HomeBlockLayout>
       <HomeBlock
         title={"Latest Blog Posts"}
         content={postFilter("blog").map((post, index) => (
@@ -190,7 +194,7 @@ const Home = (props) => {
           </li>
         ))}
       />
-      <HomeBlock title={"Connect"} content={"git, linkedin"} />
+      <HomeBlock title={"Connect"} content={RenderTags(["reactjs", "css"])} />
     </HomeBlockLayout>
   );
 };

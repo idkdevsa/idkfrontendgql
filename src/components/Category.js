@@ -6,6 +6,7 @@ import {
   PostCardLayout,
   PostCard,
   RenderHtml,
+  RenderTags,
 } from "./VsCodeSkin/VsCodeComponents";
 
 /**
@@ -98,6 +99,12 @@ const Category = (props) => {
     executeCategoryQuery();
   }, [props]);
 
+  // get current the posts tags in an array
+  const TagArray = (tags) => {
+    const tagNodes = tags.edges.map((edge) => edge.node);
+    return tagNodes.map((tag) => tag.name);
+  };
+
   return (
     <>
       <PostCardLayout title={category.name}>
@@ -109,6 +116,7 @@ const Category = (props) => {
             description={RenderHtml(post.node.excerpt)}
             imgSrc={post.node.featuredImage.sourceUrl}
             alt={post.node.title}
+            tags={RenderTags(TagArray(post.node.tags))}
           />
         ))}
       </PostCardLayout>

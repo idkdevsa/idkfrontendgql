@@ -7,10 +7,13 @@ import Search from "./Search";
 import Page from "./Page";
 import Post from "./Post";
 import Category from "./Category";
-import VsCodeTopBar from "./VsCodeSkin/VsCodeTopBar";
-import VsCodeBottomBar from "./VsCodeSkin/VsCodeBottomBar";
 import VsCodeSidebarIcons from "./VsCodeSkin/VsCodeSidebarIcons";
-import { BottomBar, MainLayout } from "./VsCodeSkin/VsCodeComponents";
+import {
+  BottomBar,
+  MainLayout,
+  TopBar,
+  ContentLayout,
+} from "./VsCodeSkin/VsCodeComponents";
 
 import { Layout } from "antd";
 
@@ -18,10 +21,11 @@ const App = (props) => {
   return (
     // <Layout className="vscodemain">
     <MainLayout>
-      <VsCodeTopBar />
+      <TopBar />
       <Layout>
         <VsCodeSidebarIcons />
-        <Layout.Content className="vscodecontent">
+        {/* <Layout.Content className="vscodecontent"> */}
+        <ContentLayout>
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/login" component={Login} />
@@ -30,9 +34,9 @@ const App = (props) => {
             <Route exact path="/post/:slug" component={Post} />
             <Route exact path="/category/:slug" component={Category} />
           </Switch>
-        </Layout.Content>
+        </ContentLayout>
+        {/* </Layout.Content> */}
       </Layout>
-      {/* <VsCodeBottomBar /> */}
       <BottomBar />
     </MainLayout>
     // </Layout>
