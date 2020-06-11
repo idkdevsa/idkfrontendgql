@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { withApollo } from "react-apollo";
 import gql from "graphql-tag";
-import { Link } from "react-router-dom";
-
-import { Card, Row, Col, Divider } from "antd";
 import useLoadingSpinner from "./useLoadingSpinner";
+import {
+  PostCardLayout,
+  PostCard,
+  RenderHtml,
+} from "./VsCodeSkin/VsCodeComponents";
 
 /**
  * GraphQL category query that takes a category slug as a filter
@@ -96,52 +98,21 @@ const Category = (props) => {
     executeCategoryQuery();
   }, [props]);
 
-  // render custom card title
-  // TODO replace Antd card with custom component
-
-  const renderCardTitle = ({ link, title }) => {
-    return <Link to={link}>{title}</Link>;
-  };
-
   return (
-    <Card className="card-post-category">
-      <h1>{category.name}</h1>
-      <Divider style={{ border: 0 }} />
-      {renderSpin()}
-      <Row>
-        <Col xs={24} sm={24} md={{ span: 20, push: 2 }}>
-          <Row>
-            {category.posts.map((post, index) => (
-              <Col key={index} xs={24} sm={24} md={12}>
-                <Card
-                  title={renderCardTitle({
-                    link: post.node.link,
-                    title: post.node.title,
-                  })}
-                  className="card-block"
-                  key={post.node.slug}
-                  cover={<img alt="" src={post.node.featuredImage.sourceUrl} />}
-                >
-                  <div
-                    // eslint-disable-next-line react/no-danger
-                    dangerouslySetInnerHTML={{
-                      __html: post.node.excerpt,
-                    }}
-                  />
-                  <Row>
-                    <Col>
-                      {post.node.tags.edges.map((tag) => (
-                        <div key={tag.node.tagId}>{tag.node.name}</div>
-                      ))}
-                    </Col>
-                  </Row>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-        </Col>
-      </Row>
-    </Card>
+    <>
+      <PostCardLayout title={category.name}>
+        {category.posts.map((post, index) => (
+          <PostCard
+            key={post.node.slug}
+            title={post.node.title}
+            titleLink={post.node.link}
+            description={RenderHtml(post.node.excerpt)}
+            imgSrc={post.node.featuredImage.sourceUrl}
+            alt={post.node.title}
+          />
+        ))}
+      </PostCardLayout>
+    </>
   );
 };
 

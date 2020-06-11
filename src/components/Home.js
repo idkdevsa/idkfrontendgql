@@ -7,8 +7,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { ApolloClient } from "apollo-boost";
 import { AUTH_TOKEN } from "../constants";
 import Config from "../CustomHooks/ApolloHooksWP/config";
-
-import { Row, Col, Card, Tabs } from "antd";
+import { HomeBlock, HomeBlockLayout } from "./VsCodeSkin/VsCodeComponents";
 
 /**
  * GraphQL page query
@@ -174,55 +173,25 @@ const Home = (props) => {
   };
 
   return (
-    <Card
-      className="homeContentCard"
-      // title="Jason Bolton - Full Stack Developer"
-      headStyle={{ color: "white" }}
-    >
-      <Row>
-        <Col
-          className="contentBlockLeft"
-          xs={22}
-          xm={22}
-          md={{ span: 12, push: 3 }}
-        >
-          <Row>
-            <Col className="contentBlockBlog">
-              <h3>Blog</h3>
-              {postFilter("blog").map((post, index) => (
-                <li key={post.slug}>
-                  <Link to={post.link}>{post.title}</Link>
-                </li>
-              ))}
-            </Col>
-          </Row>
-
-          <Row>
-            <Col className="contentBlockPortfolio">
-              <h3>Projects</h3>
-              {postFilter("projects").map((post, index) => (
-                <li key={post.slug}>
-                  <Link to={post.link}>{post.title}</Link>
-                </li>
-              ))}
-            </Col>
-          </Row>
-        </Col>
-        <Col
-          className="contentBlockRight"
-          xs={22}
-          xm={22}
-          md={{ span: 12, push: 3 }}
-        >
-          <Row>
-            <Col className="contentBlockCustomize">Customize</Col>
-          </Row>
-          <Row>
-            <Col className="contentBlockConnect">Connect</Col>
-          </Row>
-        </Col>
-      </Row>
-    </Card>
+    <HomeBlockLayout title={"Jason Bolton - Web Developer"}>
+      <HomeBlock
+        title={"Latest Blog Posts"}
+        content={postFilter("blog").map((post, index) => (
+          <li key={post.slug}>
+            <Link to={post.link}>{post.title}</Link>
+          </li>
+        ))}
+      />
+      <HomeBlock
+        title={"Recent Projects"}
+        content={postFilter("projects").map((post, index) => (
+          <li key={post.slug}>
+            <Link to={post.link}>{post.title}</Link>
+          </li>
+        ))}
+      />
+      <HomeBlock title={"Connect"} content={"git, linkedin"} />
+    </HomeBlockLayout>
   );
 };
 

@@ -10,6 +10,40 @@ $secondaryColor: #16825d;
 $contentBg: #1e1e1e;
 $authorColor: #5ac983;
 $dateColor: #b79975;
+$sideBarBg: #333333; 
+
+///tachyons colours
+.vs-text-c {
+    color: $textDark;
+}
+
+.vs-text-2-c {
+    color: $textDarkSecondary;
+}
+
+.vs-text-link-c {
+    color: $textDarkLink;
+}
+
+.vs-topbar-bg {
+    background-color: $topBarBg;
+}
+
+.vs-content-bg {
+    background-color: $contentBg;
+}
+
+.vs-sidebar-bg {
+    background-color: $sideBarBg;
+}
+
+.vs-primary-bg {
+   background-color: $primaryColor;
+}
+
+.vs-secondary-bg {
+    background-color: $secondaryColor;
+}
 
 ///Sizes
 $barHeightTop: 2.5vw;

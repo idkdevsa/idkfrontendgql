@@ -10,21 +10,18 @@ import Category from "./Category";
 import VsCodeTopBar from "./VsCodeSkin/VsCodeTopBar";
 import VsCodeBottomBar from "./VsCodeSkin/VsCodeBottomBar";
 import VsCodeSidebarIcons from "./VsCodeSkin/VsCodeSidebarIcons";
+import { BottomBar, MainLayout } from "./VsCodeSkin/VsCodeComponents";
 
-import TabContent from "./TabContent";
 import { Layout } from "antd";
-import VsCodeBreadcrumb from "./VsCodeSkin/VsCodeBreadcrumb";
-// import Tags from './Tags';
 
 const App = (props) => {
   return (
-    <Layout className="vscodemain">
+    // <Layout className="vscodemain">
+    <MainLayout>
       <VsCodeTopBar />
-      {/* <Tags /> */}
       <Layout>
         <VsCodeSidebarIcons />
         <Layout.Content className="vscodecontent">
-          {/* <TabContent> */}
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/login" component={Login} />
@@ -33,11 +30,12 @@ const App = (props) => {
             <Route exact path="/post/:slug" component={Post} />
             <Route exact path="/category/:slug" component={Category} />
           </Switch>
-          {/* </TabContent> */}
         </Layout.Content>
       </Layout>
-      <VsCodeBottomBar />
-    </Layout>
+      {/* <VsCodeBottomBar /> */}
+      <BottomBar />
+    </MainLayout>
+    // </Layout>
   );
 };
 

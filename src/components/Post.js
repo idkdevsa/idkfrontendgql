@@ -1,10 +1,8 @@
-import React, { Component, useState, useEffect } from 'react';
-import { withApollo } from 'react-apollo';
-import gql from 'graphql-tag';
-import { Card, Row, Col, Divider } from 'antd';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-import useLoadingSpinner from './useLoadingSpinner';
+import React, { useState, useEffect } from "react";
+import { withApollo } from "react-apollo";
+import gql from "graphql-tag";
+import useLoadingSpinner from "./useLoadingSpinner";
+import { PostLayout, RenderHtml } from "./VsCodeSkin/VsCodeComponents";
 
 /**
  * GraphQL post query that takes a post slug as a filter
@@ -16,6 +14,11 @@ const POST_QUERY = gql`
       title
       date
       content
+      featuredImage {
+        id
+        sourceUrl
+        altText
+      }
       author {
         name
       }
@@ -34,13 +37,18 @@ const POST_QUERY = gql`
 /**
  * Fetch and display a Post
  */
-const Post = props => {
+const Post = (props) => {
   const [post, setPost] = useState({
-    title: '',
-    content: '',
-    date: '',
+    title: "",
+    content: "",
+    date: "",
     author: {
-      name: '',
+      name: "",
+    },
+    featuredImage: {
+      id: "",
+      sourceUrl: "",
+      altText: "",
     },
   });
 
@@ -71,28 +79,15 @@ const Post = props => {
     executePostQuery();
   }, [props]);
 
-  const renderPost = () => {
-    return (
-      <Card className="card-post">
-        {renderSpin()}
-        <h1>{post.title}</h1>
-        <span className="author">{`By ${post.author.name} | `}</span>
-        <span className="date-style"> {post.date.split('T').join(' @ ')}</span>
-        <Divider />
-        <Row>
-          <Col xs={24} sm={24} md={{ span: 16, push: 4 }}>
-            <div // eslint-disable-next-line react/no-danger
-              dangerouslySetInnerHTML={{
-                __html: post.content,
-              }}
-            />
-          </Col>
-        </Row>
-      </Card>
-    );
-  };
-
-  return renderPost();
+  return (
+    <PostLayout
+      featuredImage={post.featuredImage.sourceUrl}
+      title={post.title}
+      subtitle={`Last updated ${post.date.split("T")}`}
+      author={`By ${post.author.name}`}
+      content={RenderHtml(post.content)}
+    />
+  );
 };
 
 export default withApollo(Post);
