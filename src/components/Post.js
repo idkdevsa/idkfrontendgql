@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { withApollo } from "react-apollo";
 import gql from "graphql-tag";
-import useLoadingSpinner from "./useLoadingSpinner";
-import { PostLayout, RenderHtml } from "./VsCodeSkin/VsCodeComponents";
+import {
+  PostLayout,
+  RenderHtml,
+  RenderTags,
+} from "./VsCodeSkin/VsCodeComponents";
 
 /**
  * GraphQL post query that takes a post slug as a filter
@@ -45,6 +48,9 @@ const Post = (props) => {
     author: {
       name: "",
     },
+    tags: {
+      edges: [],
+    },
     featuredImage: {
       id: "",
       sourceUrl: "",
@@ -52,16 +58,12 @@ const Post = (props) => {
     },
   });
 
-  const [{ isLoading }, renderSpin, handleLoading] = useLoadingSpinner();
-
   /**
    * Execute post query, process the response and set the state
    */
 
   useEffect(() => {
     const executePostQuery = async () => {
-      handleLoading(true);
-
       const { match, client } = props;
       const filter = match.params.slug;
       try {
@@ -70,7 +72,6 @@ const Post = (props) => {
           variables: { filter },
         });
         setPost(result.data.postBy);
-        handleLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -79,6 +80,12 @@ const Post = (props) => {
     executePostQuery();
   }, [props]);
 
+  // get current the posts tags in an array
+  const TagArray = (tags) => {
+    const tagNodes = tags.edges.map((edge) => edge.node);
+    return tagNodes.map((tag) => tag.name);
+  };
+
   return (
     <PostLayout
       featuredImage={post.featuredImage.sourceUrl}
@@ -86,6 +93,7 @@ const Post = (props) => {
       subtitle={`Last updated ${post.date.split("T")}`}
       author={`By ${post.author.name}`}
       content={RenderHtml(post.content)}
+      tags={RenderTags(TagArray(post.tags))}
     />
   );
 };

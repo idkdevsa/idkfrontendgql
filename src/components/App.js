@@ -1,6 +1,5 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-
 import Home from "./Home";
 import Login from "./Login";
 import Search from "./Search";
@@ -16,15 +15,15 @@ import {
 } from "./VsCodeSkin/VsCodeComponents";
 
 import { Layout } from "antd";
+import Tags from "./Tags";
+import { LoaderAnimation } from "./VsCodeSkin/LoaderAnimation/LoaderAnimation";
 
 const App = (props) => {
   return (
-    // <Layout className="vscodemain">
     <MainLayout>
       <TopBar />
       <Layout>
         <VsCodeSidebarIcons />
-        {/* <Layout.Content className="vscodecontent"> */}
         <ContentLayout>
           <Switch>
             <Route exact path="/" component={Home} />
@@ -33,13 +32,12 @@ const App = (props) => {
             <Route exact path="/page/:slug" component={Page} />
             <Route exact path="/post/:slug" component={Post} />
             <Route exact path="/category/:slug" component={Category} />
+            <Route exact path="/tag/:slug" component={Tags} />
           </Switch>
         </ContentLayout>
-        {/* </Layout.Content> */}
       </Layout>
       <BottomBar />
     </MainLayout>
-    // </Layout>
   );
 };
 

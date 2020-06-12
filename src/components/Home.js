@@ -179,7 +179,7 @@ const Home = (props) => {
   return (
     <HomeBlockLayout>
       <HomeBlock
-        title={"Latest Blog Posts"}
+        title={"Latest Posts"}
         content={postFilter("blog").map((post, index) => (
           <li key={post.slug}>
             <Link to={post.link}>{post.title}</Link>
@@ -194,7 +194,7 @@ const Home = (props) => {
           </li>
         ))}
       />
-      <HomeBlock title={"Connect"} content={RenderTags(["reactjs", "css"])} />
+      <HomeBlock title={"Connect"} content={RenderTags(["github"])} />
     </HomeBlockLayout>
   );
 };

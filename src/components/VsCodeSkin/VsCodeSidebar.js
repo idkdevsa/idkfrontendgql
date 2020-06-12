@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import gql from 'graphql-tag';
+import React, { useState, useEffect } from "react";
+import gql from "graphql-tag";
 
-import { Menu, Layout } from 'antd';
-import { withRouter } from 'react-router';
-import { withApollo } from 'react-apollo';
-import { Link } from 'react-router-dom';
+import { Menu } from "antd";
+import { withApollo } from "react-apollo";
+import { Link } from "react-router-dom";
 
 /**
  * GraphQL menu query
@@ -19,35 +18,17 @@ const MENU_QUERY = gql`
     }
   }
 `;
-const GET_MENU_ITEM = `
- query MenuItemQuery($id: ID!) {
-   menuItem(id: $id) {
-    id
-    menuItemId
-    title
-    url
-    connectedObject {
-      __typename
-    }
-    cssClasses
-    description
-    label
-    linkRelationship
-    target
-  }
-}`;
 
-const VsCodeSidebar = props => {
+const VsCodeSidebar = (props) => {
   const [menus, setMenus] = useState([]);
 
-  const curMenus = useEffect(() => {
+  useEffect(() => {
     const executeMenu = async () => {
       try {
         const result = await props.client.query({
           query: MENU_QUERY,
         });
         setMenus(result.data.headerMenu);
-        console.log(result.data);
       } catch (error) {
         console.log(error);
       }
@@ -66,7 +47,7 @@ const VsCodeSidebar = props => {
               __typename: el.__typename,
             })
           : acc,
-      [],
+      []
     );
     return (
       <Menu

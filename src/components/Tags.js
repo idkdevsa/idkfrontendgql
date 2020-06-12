@@ -1,35 +1,43 @@
-import React, { Component, useState, useEffect } from 'react';
-import { withApollo } from 'react-apollo';
-import gql from 'graphql-tag';
-import { Link } from 'react-router-dom';
+import React, { Component, useState, useEffect } from "react";
+import { withApollo } from "react-apollo";
+import gql from "graphql-tag";
+import { Link } from "react-router-dom";
 
-import { Card, Avatar, Layout } from 'antd';
+import { Card, Avatar, Layout } from "antd";
 import {
   EditOutlined,
   EllipsisOutlined,
   SettingOutlined,
-} from '@ant-design/icons';
+} from "@ant-design/icons";
+import {
+  PostCardLayout,
+  PostCard,
+  RenderHtml,
+} from "./VsCodeSkin/VsCodeComponents";
 
 /**
  * GraphQL tag query that takes a tag slug as a filter
  * Returns the posts belonging to the tag and the tag name and ID
  */
 const TAG_QUERY = gql`
-  query GET_TAGS {
-    tags {
+  query TagQuery($filter: [String]) {
+    tags(where: { slug: $filter }) {
       edges {
         node {
           id
           tagId
           name
-          tagIcon {
-            url
-          }
           posts {
             nodes {
               id
               title
-              date
+              slug
+              excerpt
+              featuredImage {
+                id
+                sourceUrl
+                altText
+              }
             }
           }
         }
@@ -41,7 +49,7 @@ const TAG_QUERY = gql`
 /**
  * Fetch and display a Tag
  */
-const Tags = props => {
+const Tags = (props) => {
   const [tags, setTags] = useState({ tags: [], posts: [] });
 
   /**
@@ -50,12 +58,15 @@ const Tags = props => {
 
   useEffect(() => {
     const executeTagQuery = async () => {
+      const { match } = props;
+      const filter = match.params.slug;
       try {
         const result = await props.client.query({
           query: TAG_QUERY,
+          variables: { filter },
         });
         let tags = result.data.tags.edges;
-        let posts = tags.map(tag => tag.node.posts.nodes);
+        let posts = tags.map((tag) => tag.node.posts.nodes);
         setTags({ tags, posts } || { tags: [], posts: [] });
       } catch (error) {
         console.log(error);
@@ -66,35 +77,22 @@ const Tags = props => {
 
   return (
     <>
-      {console.log(tags)}
-      {/* <Card className="card-post">
+      <PostCardLayout title={props.match.params.slug}>
         {console.log(tags)}
-        {tags.posts.map((post, index) => (
-          <Card.Grid key={index}>
-            <Card
-              className="card-block"
-              key={post.node.id}
-              cover={<img alt="" src="post.node.featuredImage.sourceUrl" />}
-              actions={[
-                <SettingOutlined key="setting" />,
-                <EditOutlined key="edit" />,
-                <EllipsisOutlined key="ellipsis" />,
-              ]}
-            >
-              <h1>
-                <Link to={post.node.link}> {post.node.title}</Link>
-              </h1>
-
-              <div
-                // eslint-disable-next-line react/no-danger
-                dangerouslySetInnerHTML={{
-                  __html: post.node.excerpt,
-                }}
-              />
-            </Card>
-          </Card.Grid>
-        ))}
-      </Card> */}
+        {tags.posts.map((post) =>
+          post.map((p, index) => (
+            <PostCard
+              key={p.slug}
+              title={p.title}
+              titleLink={p.slug}
+              description={RenderHtml(p.excerpt)}
+              imgSrc={p.featuredImage.sourceUrl}
+              alt={p.title}
+              // tags={RenderTags(TagArray(post.node.tags))}
+            />
+          ))
+        )}
+      </PostCardLayout>
     </>
   );
 };

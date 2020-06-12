@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { withApollo } from "react-apollo";
 import gql from "graphql-tag";
-import useLoadingSpinner from "./useLoadingSpinner";
 import {
   PostCardLayout,
   PostCard,
@@ -66,15 +65,12 @@ const CATEGORY_QUERY = gql`
 const Category = (props) => {
   const [category, setCategory] = useState({ name: "", posts: [] });
 
-  const [{ isLoading }, renderSpin, handleLoading] = useLoadingSpinner();
-
   /**
    * Execute the category query, parse the result and set the state
    */
 
   useEffect(() => {
     const executeCategoryQuery = async () => {
-      handleLoading(true);
       const { match, client } = props;
       const filter = match.params.slug;
       try {
@@ -91,7 +87,6 @@ const Category = (props) => {
           return modifiedPost;
         });
         setCategory({ name, posts } || { name: "", posts: [] });
-        handleLoading(false);
       } catch (error) {
         console.log(error);
       }

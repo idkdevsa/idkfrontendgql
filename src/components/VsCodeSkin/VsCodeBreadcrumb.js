@@ -1,23 +1,16 @@
-import React from 'react';
-import {
-  HashRouter as Router,
-  Route,
-  Switch,
-  Link,
-  withRouter,
-  NavLink,
-} from 'react-router-dom';
-import { Breadcrumb, Alert } from 'antd';
-import withBreadcrumbs from 'react-router-breadcrumbs-hoc';
+import React from "react";
+import { withRouter, NavLink } from "react-router-dom";
+import { Breadcrumb } from "antd";
+import withBreadcrumbs from "react-router-breadcrumbs-hoc";
 
 // define breadcrumb to dynamically change with the slug
 
-const DynamicUserBreadCrumb = props => {
+const DynamicUserBreadCrumb = (props) => {
   console.log(props);
   return props.match.params.slug;
 };
 
-const routes = [{ path: '/s/', breadcrumb: DynamicUserBreadCrumb }];
+const routes = [{ path: "/s/", breadcrumb: DynamicUserBreadCrumb }];
 
 // map & render breadcrumb components.
 const VsCodeBreadcrumb = withBreadcrumbs(routes)(({ breadcrumbs }) => (
