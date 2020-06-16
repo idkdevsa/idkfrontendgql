@@ -37,22 +37,18 @@ const VsCodeSidebarIcons = () => {
           onClick={({ key }) => handleMenuCollapse(key)}
         >
           <Menu.Item key={menuItems.Blog}>
-            <Tooltip placement="rightBottom" title="Blog">
-              <Button
-                type="link"
-                ghost
-                icon={<CommentOutlined style={{ fontSize: "2rem" }} />}
-              />
-            </Tooltip>
+            <Button
+              type="link"
+              ghost
+              icon={<CommentOutlined style={{ fontSize: "2rem" }} />}
+            />
           </Menu.Item>
           <Menu.Item key={menuItems.Projects}>
-            <Tooltip placement="bottom" title="Projects">
-              <Button
-                type="link"
-                ghost
-                icon={<UserOutlined style={{ fontSize: "2rem" }} />}
-              />
-            </Tooltip>
+            <Button
+              type="link"
+              ghost
+              icon={<UserOutlined style={{ fontSize: "2rem" }} />}
+            />
           </Menu.Item>
         </Menu>
       </Layout.Sider>

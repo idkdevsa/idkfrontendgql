@@ -28,6 +28,7 @@ const VsCodeSidebar = (props) => {
         const result = await props.client.query({
           query: MENU_QUERY,
         });
+
         setMenus(result.data.headerMenu);
       } catch (error) {
         console.log(error);
@@ -51,10 +52,13 @@ const VsCodeSidebar = (props) => {
     );
     return (
       <Menu
-        className="vscodesidebarmenuitem"
         selectable={false}
+        className="vscodesidebarmenuitem"
         onClick={props.setMenuCollapse}
       >
+        <Menu.Item disabled className="bg-black-40 white" key={props.curMenu}>
+          {props.curMenu.charAt(0).toUpperCase() + props.curMenu.slice(1)}
+        </Menu.Item>
         {curMenu.map((item, index) => {
           return (
             <Menu.Item className="" key={item.label}>

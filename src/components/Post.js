@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { withApollo } from "react-apollo";
+import { withApollo, useQuery } from "react-apollo";
 import gql from "graphql-tag";
 import {
   PostLayout,
   RenderHtml,
   RenderTags,
+  RenderLoader,
 } from "./VsCodeSkin/VsCodeComponents";
 
 /**
@@ -62,40 +63,42 @@ const Post = (props) => {
    * Execute post query, process the response and set the state
    */
 
+  const { match } = props;
+  const filter = match.params.slug;
+  const { data, loading, error } = useQuery(POST_QUERY, {
+    variables: { filter },
+  });
+
   useEffect(() => {
-    const executePostQuery = async () => {
-      const { match, client } = props;
-      const filter = match.params.slug;
-      try {
-        const result = await client.query({
-          query: POST_QUERY,
-          variables: { filter },
-        });
-        setPost(result.data.postBy);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    if (!loading && data) {
+      setPost(data.postBy);
+    }
+  }, [loading, data]);
 
-    executePostQuery();
-  }, [props]);
+  const RenderData = () => {
+    if (loading) return <RenderLoader />;
+    if (error) return <p>{console.log(error)}</p>;
+    if (!data) return <p>Not found</p>;
 
-  // get current the posts tags in an array
+    return (
+      <PostLayout
+        featuredImage={post.featuredImage.sourceUrl}
+        title={post.title}
+        subtitle={`Last updated ${post.date.split("T")}`}
+        author={`By ${post.author.name}`}
+        content={RenderHtml(post.content)}
+        tags={RenderTags(TagArray(post.tags))}
+      />
+    );
+  };
+
+  // get current posts tags in an array
   const TagArray = (tags) => {
     const tagNodes = tags.edges.map((edge) => edge.node);
     return tagNodes.map((tag) => tag.name);
   };
 
-  return (
-    <PostLayout
-      featuredImage={post.featuredImage.sourceUrl}
-      title={post.title}
-      subtitle={`Last updated ${post.date.split("T")}`}
-      author={`By ${post.author.name}`}
-      content={RenderHtml(post.content)}
-      tags={RenderTags(TagArray(post.tags))}
-    />
-  );
+  return RenderData();
 };
 
 export default withApollo(Post);

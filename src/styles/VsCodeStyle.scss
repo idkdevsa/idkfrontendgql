@@ -1,5 +1,122 @@
 ///////////////// Variables ////////////////
 
+ ////////////////// Loader
+ .loader {
+    --path: rgb(255, 255, 255);
+    --dot: #007acc;
+    --duration: 1s;
+    width: 44px;
+    height: 44px;
+    position: relative;
+    &:before {
+        content: '';
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        position: absolute;
+        display: block;
+        background: var(--dot);
+        top: 37px;
+        left: 19px;
+        transform: translate(-18px, -18px);
+        animation: dotRect var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+    }
+    svg {
+        display: block;
+        width: 100%;
+        height: 100%;
+        rect,
+        polygon,
+        circle {
+            fill: none;
+            stroke: var(--path);
+            stroke-width: 10px;
+            stroke-linejoin: round;
+            stroke-linecap: round;
+        }
+        polygon {
+            stroke-dasharray: 145 (221 - 145) 145 (221 - 145);
+            stroke-dashoffset: 0;
+            animation: pathTriangle var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+        }
+    }
+    &.triangle {
+        width: 48px;
+        &:before {
+            left: 21px;
+            transform: translate(-10px, -18px);
+            animation: dotTriangle var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+        }
+    }
+}
+
+@keyframes pathTriangle {
+    33% {
+        stroke-dashoffset: 74;
+    }
+    66% {
+        stroke-dashoffset: 147;
+    }
+    100% {
+        stroke-dashoffset: 221;
+    }
+}
+
+@keyframes dotTriangle {
+    33% {
+        transform: translate(0, 0);
+    }
+    66% {
+        transform: translate(10px, -18px);
+    }
+    100% {
+        transform: translate(-10px, -18px);
+    }
+}
+
+@keyframes pathRect {
+    25% {
+        stroke-dashoffset: 64;
+    }
+    50% {
+        stroke-dashoffset: 128;
+    }
+    75% {
+        stroke-dashoffset: 192;
+    }
+    100% {
+        stroke-dashoffset: 256;
+    }
+}
+
+@keyframes dotRect {
+    25% {
+        transform: translate(0, 0);
+    }
+    50% {
+        transform: translate(18px, -18px);
+    }
+    75% {
+        transform: translate(0, -36px);
+    }
+    100% {
+        transform: translate(-18px, -18px);
+    }
+}
+
+.loader {
+    display: inline-block;
+    margin: 0 16px;
+}
+
+html {
+    -webkit-font-smoothing: antialiased;
+}
+
+
+
+  
+
 ///Colors
 $textDark: #fff;
 $textDarkSecondary: #828182;
@@ -45,6 +162,11 @@ $sideBarBg: #333333;
     background-color: $secondaryColor;
 }
 
+.ant-menu-item-disabled {
+    color: $textDark!important;
+    background-color: $contentBg;
+}
+
 ///Sizes
 $barHeightTop: 2.5vw;
 $barHeightBottom: 2vw;
@@ -73,17 +195,15 @@ max-height: 100vh;
 overflow: hidden;
 }
 
-.vscodetopbar {
+.icon-height {
+    height: $barHeightTop;
     min-height: $minBarHeightTop;
     max-height: $maxBarHeightTop;
-    // background-color: $topBarBg;
-    // line-height: $maxBarHeightTop;
-    // // 0px 1vw 0vw 1vw
-    // padding: 0 0 0 1.5rem;
 }
 
+
+
 .vscodesidebaricons {
-    height: $contentHeight;
     min-height: $minContentHeight;
     max-height: $maxContentHeight;
     background-color: #333333;
@@ -92,16 +212,14 @@ overflow: hidden;
 }
 
 .vscodesidebar {
-    height: $contentHeight;
-    min-height: $minContentHeight;
     max-height: $maxContentHeight;
     background-color: #252526;
     position: 'fixed';
+    border: 0;
 
 }
 
 .vscodecontent  {
-    min-height: $minContentHeight;
     max-height: $maxContentHeight;
     background-color: $contentBg;
  }
@@ -110,11 +228,12 @@ overflow: hidden;
     height: $barHeightBottom;
     min-height: $minBarHeightBottom;
     max-height: $maxBarHeightBottom;
-    background-color: $primaryColor;
-    // line-height: $barHeight;
-    color: $textDark;
-    padding: 0 0 0 0;
+}
 
+.vscodetopbar {
+    height: $barHeightTop;
+    min-height: $minBarHeightTop;
+    max-height: $maxBarHeightTop;
 }
 
 .vscodebottombarleft {
@@ -131,8 +250,6 @@ overflow: hidden;
     background-color: #333333;
     color: $textDarkSecondary;
     border: 0;
-
-    
 }
 
 .vscodesidebariconsmenuitem svg {
@@ -148,7 +265,7 @@ overflow: hidden;
 }
 .vscodesidebarmenuitem {
     background-color: #333333;
-    
+    border: 0;    
 }
 
 .vscodetopbarmenuitem {

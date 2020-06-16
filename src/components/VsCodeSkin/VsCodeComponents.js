@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AiOutlineHome } from "react-icons/ai";
 import {
   GrCss3,
@@ -13,33 +13,66 @@ import {
   GrHeroku,
   GrAmazon,
   GrNode,
+  GrLinkedin,
 } from "react-icons/gr";
-import VsCodeBreadcrumb from "./VsCodeBreadcrumb";
-import history from "../../history";
 import SyntaxHighlighter from "react-syntax-highlighter";
-import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import ReactHtmlParser, { processNodes } from "react-html-parser";
 import { anOldHope } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 // TODO split components to files
 
+/*
+
+Create a custom block in wordpress, from scratch or with a plugin. 
+
+ Takes raw html input.
+ The transform func checks tag node by name, 
+ and transforms the one that matches into the specified component, which will be returned by react-html-parser.
+
+ // <tagName></tagName> becomes <ComponentName></ComponentName> 
+
+ The component specified wraps a processNodes func that gets passed the matching nodes children, and transform func.
+ react-syntax-highlighter then highlights according to what language you specify.
+ Create custom blocks in wordpress that wrap the block content in the tag name you check with the transform func,
+ or use a custom html block in wordpress like this:
+
+// <tagName>content here<tagName>
+
+ */
+
 export const RenderHtml = (val) => {
   function transform(node, index) {
     if (node.type === "tag" && node.name === "js") {
       return (
-        <SyntaxHighlighter key={index} language="javascript" style={anOldHope}>
+        <SyntaxHighlighter
+          key={index}
+          className="f6"
+          language="javascript"
+          style={anOldHope}
+          showLineNumbers
+        >
           {processNodes(node.children, transform)}
         </SyntaxHighlighter>
       );
     } else if (node.type === "tag" && node.name === "bash") {
       return (
-        <SyntaxHighlighter key={index} language="bash" style={anOldHope}>
+        <SyntaxHighlighter
+          key={index}
+          className="f6"
+          language="bash"
+          style={anOldHope}
+        >
           {processNodes(node.children, transform)}
         </SyntaxHighlighter>
       );
     } else if (node.type === "tag" && node.name === "apache") {
       return (
-        <SyntaxHighlighter key={index} language="apache" style={anOldHope}>
+        <SyntaxHighlighter
+          key={index}
+          className="f6"
+          language="apache"
+          style={anOldHope}
+        >
           {processNodes(node.children, transform)}
         </SyntaxHighlighter>
       );
@@ -51,33 +84,14 @@ export const RenderHtml = (val) => {
     transform,
   };
 
-  let newHtml = `${val}`;
+  const newHtml = `${val}`;
   return <div>{ReactHtmlParser(newHtml, options)}</div>;
 };
 
-// export const RenderBackButton = () => {
-//   let location = useLocation();
-//   console.log(location);
-//   return (
-//     <div className="flex items-center justify-center pa4">
-//       <a
-//         onClick={() => history.goBack()}
-//         className="f5 no-underline black bg-animate hover-bg-black hover-white inline-flex items-center pa3 ba border-box mr4"
-//       >
-//         <svg
-//           className="w1"
-//           data-icon="chevronLeft"
-//           viewBox="0 0 32 32"
-//           style={{ fill: "white" }}
-//         >
-//           <title>chevronLeft icon</title>
-//           <path d="M20 1 L24 5 L14 16 L24 27 L20 31 L6 16 z"></path>
-//         </svg>
-//         <span className="pl1 white">Back</span>
-//       </a>
-//     </div>
-//   );
-// };
+/* 
+  Takes an array of string values which are tag names, filters the tags array with them,
+  and returns linked tag icons
+*/
 
 export const RenderTags = (tagValues) => {
   const tags = [
@@ -109,12 +123,14 @@ export const RenderTags = (tagValues) => {
     {
       tagName: "javascript",
       icon: <GrJs key="GrJs" className="dib w2 pl1 ml3 h2 br-100 white" />,
+      // link: "/tag/javascript",
     },
     {
       tagName: "reactjs",
       icon: (
         <GrReactjs key="GrReactjs" className="dib w2 pl1 ml3 h2 br-100 white" />
       ),
+      // link: "/tag/reactjs",
     },
     {
       tagName: "wordpress",
@@ -131,24 +147,7 @@ export const RenderTags = (tagValues) => {
         <GrHeroku key="GrHeroku" className="dib w2 pl1 ml3 h2 br-100 white" />
       ),
     },
-    // {
-    //   tagName: "pwa",
-    //   icon: (
-    //     <GrHeroku
-    //       key="GrHeroku"
-    //       className="dib w2 pl1 ml3 h2 br-100 white"
-    //     />
-    //   ),
-    // },
-    // {
-    //   tagName: "apache",
-    //   icon: (
-    //     <GrHeroku
-    //       key="GrHeroku"
-    //       className="dib w2 pl1 ml3 h2 br-100 white"
-    //     />
-    //   ),
-    // },
+
     {
       tagName: "aws",
       icon: (
@@ -166,6 +165,16 @@ export const RenderTags = (tagValues) => {
       ),
       link: "https://github.com/idkdevsa",
     },
+    {
+      tagName: "linkedin",
+      icon: (
+        <GrLinkedin
+          key="GrLinkedin"
+          className="dib w2 pl1 ml3 h2 br-100 white"
+        />
+      ),
+      link: "https://www.linkedin.com/in/jason-bolton-idkdev/",
+    },
   ];
 
   //filter tags array by array of tag names
@@ -178,6 +187,18 @@ export const RenderTags = (tagValues) => {
   ));
 };
 
+export const RenderLoader = () => {
+  return (
+    <div className="loader triangle">
+      <svg viewBox="0 0 86 80">
+        <polygon points="43 8 79 72 7 72"></polygon>
+      </svg>
+    </div>
+  );
+};
+
+// Layout components
+
 export const MainLayout = ({ children }) => {
   return <div className="vscodemain">{children}</div>;
 };
@@ -185,12 +206,7 @@ export const MainLayout = ({ children }) => {
 export const ContentLayout = ({ children }) => {
   return (
     <>
-      <div className="vscodecontent overflow-y-scroll w-100">
-        {/* <span>
-          <VsCodeBreadcrumb />
-        </span> */}
-        {children}
-      </div>
+      <div className="vscodecontent overflow-y-scroll w-100">{children}</div>
     </>
   );
 };
@@ -199,7 +215,7 @@ export const HomeBlockLayout = ({ title, children }) => {
   return (
     <>
       <h1 className="f5 f4-ns fw6 tc vs-text-c">{title}</h1>
-      <div className="mw9 center ph3-ns mt5">
+      <div className="mw9 center ph3">
         <div className="cf ph2-ns mt6">{children}</div>
       </div>
     </>
@@ -209,7 +225,7 @@ export const HomeBlockLayout = ({ title, children }) => {
 export const HomeBlock = ({ title, content }) => {
   return (
     <div className="fl w-100 w-50-ns pa2">
-      <h2 className="f5 f4-ns fw6 tc vs-text-c">{title}</h2>
+      <span className="f5 f4-ns vs-text-2-c">{title}</span>
       <div className="pv4">{content}</div>
     </div>
   );
@@ -256,10 +272,6 @@ export const PostCard = ({
   );
 };
 
-/*
- *  TODO set main featured image and/or map other images
- */
-
 export const PostLayout = ({
   title,
   subtitle,
@@ -277,31 +289,13 @@ export const PostLayout = ({
           <p className="tc f6 vs-text-2-c">{subtitle}</p>
           <div className="f4 lh-copy mt2 white ">{tags}</div>
         </div>
-        <div className="cf mw8 center">
-          <div className="fl w-33 w-50-m w-33-l pr2 pr2-l">
-            <div
-              className="pv6 cover bg-center"
-              style={{
-                backgroundImage: `url(${featuredImage})`,
-              }}
-            ></div>
-          </div>
-          <div className="fl w-33 w-50-m w-33-l ph3 pr0-m ph3-l">
-            <div
-              className="pv6 cover bg-center"
-              style={{
-                backgroundImage: `url(${featuredImage})`,
-              }}
-            ></div>
-          </div>
-          <div className="fl w-33 w-100-m w-33-l pl2 pl0-m pl2-l mt4-m">
-            <div
-              className="pv6 cover bg-center"
-              style={{
-                backgroundImage: `url(${featuredImage})`,
-              }}
-            ></div>
-          </div>
+        <div className="mw8 center">
+          <div
+            className="pv6 contain bg-center"
+            style={{
+              backgroundImage: `url(${featuredImage})`,
+            }}
+          ></div>
         </div>
         <div className="measure f3 center mv5 black-70">
           <div className="lh-copy measure f4 f3-ns vs-text-c baskerville">
@@ -315,16 +309,16 @@ export const PostLayout = ({
 
 export const TopBar = () => {
   return (
-    <nav className="vscodetopbar db dt-l w-100 border-box v-mid vs-topbar-bg overflow-hidden">
-      <div className="fl w-10">
+    <nav className="mw-100 vs-topbar-bg overflow-hidden vscodetopbar">
+      <div className="fl w3">
         <Link to="/" title="Home">
-          <AiOutlineHome className="dib w2  ml3 h2 br-100" alt="idkdev" />
+          <AiOutlineHome className="icon-height ml3 br-100" alt="idkdev" />
         </Link>
       </div>
-      <div className="fl w-90 db dtc-l tl-l mt2">
-        <span className="vs-text-c">Jason Bolton - Web Developer</span>
+      <div className="fl mt1">
+        <span className="vs-text-c">Jason Bolton - Web Developer - </span>
         <span className="vs-text-c">
-          <a href="mailto:jason@idkdev.co.za"> - Contact</a>
+          <a href="mailto:jason@idkdev.co.za">Contact</a>
         </span>
       </div>
     </nav>
@@ -333,12 +327,12 @@ export const TopBar = () => {
 
 export const BottomBar = () => {
   return (
-    <footer className="mw-100">
-      <div className="fl w-10 vs-secondary-bg">
-        <p className="tc">VsCodeSkin</p>
+    <footer className="mw-100 vscodebottombar">
+      <div className="fl pl1 pr1 vs-secondary-bg">
+        <p className="tc white">VsCodeSkin</p>
       </div>
-      <div className="fl w-90 vs-primary-bg">
-        <p className="tc">"// Always under construction"</p>
+      <div className="flex vs-primary-bg">
+        <p className="tc white">"// Always under construction"</p>
       </div>
     </footer>
   );

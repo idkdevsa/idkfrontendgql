@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { withApollo } from "react-apollo";
+import { withApollo, useQuery } from "react-apollo";
 import gql from "graphql-tag";
 import {
   PostCardLayout,
   PostCard,
   RenderHtml,
   RenderTags,
+  RenderLoader,
 } from "./VsCodeSkin/VsCodeComponents";
+import { Link } from "react-router-dom";
 
 /**
  * GraphQL category query that takes a category slug as a filter
@@ -68,31 +70,25 @@ const Category = (props) => {
   /**
    * Execute the category query, parse the result and set the state
    */
+  const { match } = props;
+  const filter = match.params.slug;
+  const { data, loading, error } = useQuery(CATEGORY_QUERY, {
+    variables: { filter },
+  });
 
   useEffect(() => {
-    const executeCategoryQuery = async () => {
-      const { match, client } = props;
-      const filter = match.params.slug;
-      try {
-        const result = await client.query({
-          query: CATEGORY_QUERY,
-          variables: { filter },
-        });
-        let name = result.data.categories.edges[0].node.name;
-        let posts = result.data.posts.edges;
-        posts = posts.map((post) => {
-          const finalLink = `/post/${post.node.slug}`;
-          const modifiedPost = { ...post };
-          modifiedPost.node.link = finalLink;
-          return modifiedPost;
-        });
-        setCategory({ name, posts } || { name: "", posts: [] });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    executeCategoryQuery();
-  }, [props]);
+    if (!loading && data) {
+      let name = data.categories.edges[0].node.name;
+      let posts = data.posts.edges;
+      posts = posts.map((post) => {
+        const finalLink = `/post/${post.node.slug}`;
+        const modifiedPost = { ...post };
+        modifiedPost.node.link = finalLink;
+        return modifiedPost;
+      });
+      setCategory({ name, posts } || { name: "", posts: [] });
+    }
+  }, [loading, data]);
 
   // get current the posts tags in an array
   const TagArray = (tags) => {
@@ -100,23 +96,31 @@ const Category = (props) => {
     return tagNodes.map((tag) => tag.name);
   };
 
-  return (
-    <>
-      <PostCardLayout title={category.name}>
-        {category.posts.map((post, index) => (
-          <PostCard
-            key={post.node.slug}
-            title={post.node.title}
-            titleLink={post.node.link}
-            description={RenderHtml(post.node.excerpt)}
-            imgSrc={post.node.featuredImage.sourceUrl}
-            alt={post.node.title}
-            tags={RenderTags(TagArray(post.node.tags))}
-          />
-        ))}
-      </PostCardLayout>
-    </>
-  );
+  const RenderData = () => {
+    if (loading) return <RenderLoader />;
+    if (error) return <p>{console.log(error)}</p>;
+    if (!data) return <p>Not found</p>;
+
+    return (
+      <>
+        <PostCardLayout title={category.name}>
+          {category.posts.map((post, index) => (
+            <PostCard
+              key={post.node.slug}
+              title={post.node.title}
+              titleLink={post.node.link}
+              description={RenderHtml(post.node.excerpt)}
+              imgSrc={post.node.featuredImage.sourceUrl}
+              alt={post.node.title}
+              tags={RenderTags(TagArray(post.node.tags))}
+            />
+          ))}
+        </PostCardLayout>
+      </>
+    );
+  };
+
+  return RenderData();
 };
 
 export default withApollo(Category);

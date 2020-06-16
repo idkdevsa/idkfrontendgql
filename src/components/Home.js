@@ -194,7 +194,10 @@ const Home = (props) => {
           </li>
         ))}
       />
-      <HomeBlock title={"Connect"} content={RenderTags(["github"])} />
+      <HomeBlock
+        title={"Connect"}
+        content={RenderTags(["github", "linkedin"])}
+      />
     </HomeBlockLayout>
   );
 };

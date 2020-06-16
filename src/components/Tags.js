@@ -3,12 +3,6 @@ import { withApollo } from "react-apollo";
 import gql from "graphql-tag";
 import { Link } from "react-router-dom";
 
-import { Card, Avatar, Layout } from "antd";
-import {
-  EditOutlined,
-  EllipsisOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
 import {
   PostCardLayout,
   PostCard,
@@ -78,7 +72,6 @@ const Tags = (props) => {
   return (
     <>
       <PostCardLayout title={props.match.params.slug}>
-        {console.log(tags)}
         {tags.posts.map((post) =>
           post.map((p, index) => (
             <PostCard
