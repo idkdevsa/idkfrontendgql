@@ -4,11 +4,9 @@ import gql from "graphql-tag";
 import {
   PostCardLayout,
   PostCard,
-  RenderHtml,
   RenderTags,
   RenderLoader,
 } from "./VsCodeSkin/VsCodeComponents";
-import { Link } from "react-router-dom";
 
 /**
  * GraphQL category query that takes a category slug as a filter
@@ -90,7 +88,7 @@ const Category = (props) => {
     }
   }, [loading, data]);
 
-  // get current the posts tags in an array
+  // get the current posts tags in an array
   const TagArray = (tags) => {
     const tagNodes = tags.edges.map((edge) => edge.node);
     return tagNodes.map((tag) => tag.name);
@@ -109,7 +107,7 @@ const Category = (props) => {
               key={post.node.slug}
               title={post.node.title}
               titleLink={post.node.link}
-              description={RenderHtml(post.node.excerpt)}
+              description={post.node.excerpt}
               imgSrc={post.node.featuredImage.sourceUrl}
               alt={post.node.title}
               tags={RenderTags(TagArray(post.node.tags))}

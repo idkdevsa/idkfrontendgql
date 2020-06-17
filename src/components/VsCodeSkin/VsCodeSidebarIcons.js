@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Button, Tooltip, Menu, Layout } from "antd";
+import React, { useState, useCallback } from "react";
+import { Button, Menu, Layout } from "antd";
 import { CommentOutlined, UserOutlined } from "@ant-design/icons";
 import VsCodeSidebar from "./VsCodeSidebar";
 
@@ -8,18 +8,21 @@ const VsCodeSidebarIcons = () => {
   const [curMenu, setCurMenu] = useState("blog");
 
   // Handle behavior of main sidebar and set current menu
-  const handleMenuCollapse = (curMenuSelection) => {
-    setMenuCollapse(
-      curMenuSelection !== curMenu && menuCollapse === false
-        ? false
-        : curMenuSelection !== curMenu && menuCollapse === true
-        ? false
-        : curMenuSelection === curMenu && menuCollapse === false
-        ? true
-        : false
-    );
-    setCurMenu(curMenuSelection);
-  };
+  const handleMenuCollapse = useCallback(
+    (curMenuSelection) => {
+      setMenuCollapse(
+        curMenuSelection !== curMenu && menuCollapse === false
+          ? false
+          : curMenuSelection !== curMenu && menuCollapse === true
+          ? false
+          : curMenuSelection === curMenu && menuCollapse === false
+          ? true
+          : false
+      );
+      setCurMenu(curMenuSelection);
+    },
+    [curMenu, menuCollapse]
+  );
 
   // define side bar menu icon keys
 

@@ -2,19 +2,18 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { AiOutlineHome } from "react-icons/ai";
 import {
-  GrCss3,
-  GrGraphQl,
-  GrHtml5,
-  GrJs,
-  GrCafeteria,
-  GrReactjs,
-  GrWordpress,
-  GrGithub,
-  GrHeroku,
-  GrAmazon,
-  GrNode,
-  GrLinkedin,
-} from "react-icons/gr";
+  FaCss3,
+  FaHtml5,
+  FaJs,
+  FaCarrot,
+  FaReact,
+  FaWordpress,
+  FaGithub,
+  FaAmazon,
+  FaNode,
+  FaLinkedin,
+} from "react-icons/fa";
+import { GrGraphQl, GrHeroku } from "react-icons/gr";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import ReactHtmlParser, { processNodes } from "react-html-parser";
 import { anOldHope } from "react-syntax-highlighter/dist/esm/styles/hljs";
@@ -97,7 +96,7 @@ export const RenderTags = (tagValues) => {
   const tags = [
     {
       tagName: "css",
-      icon: <GrCss3 key="GrCss3" className="dib w2 pl1 ml3 h2 br-100 white" />,
+      icon: <FaCss3 key="FaCss3" className="dib w2 pl1 ml3 h2 br-100 white" />,
     },
     {
       tagName: "graphql",
@@ -108,35 +107,32 @@ export const RenderTags = (tagValues) => {
     {
       tagName: "html",
       icon: (
-        <GrHtml5 key="GrHtml5" className="dib w2 pl1 ml3 h2 br-100 white" />
+        <FaHtml5 key="FaHtml5" className="dib w2 pl1 ml3 h2 br-100 white" />
       ),
     },
     {
       tagName: "food",
       icon: (
-        <GrCafeteria
-          key="GrCafeteria"
-          className="dib w2 pl1 ml3 h2 br-100 white"
-        />
+        <FaCarrot key="FaCarrot" className="dib w2 pl1 ml3 h2 br-100 white" />
       ),
     },
     {
       tagName: "javascript",
-      icon: <GrJs key="GrJs" className="dib w2 pl1 ml3 h2 br-100 white" />,
+      icon: <FaJs key="FaJs" className="dib w2 pl1 ml3 h2 br-100 white" />,
       // link: "/tag/javascript",
     },
     {
       tagName: "reactjs",
       icon: (
-        <GrReactjs key="GrReactjs" className="dib w2 pl1 ml3 h2 br-100 white" />
+        <FaReact key="FaReact" className="dib w2 pl1 ml3 h2 br-100 white" />
       ),
       // link: "/tag/reactjs",
     },
     {
       tagName: "wordpress",
       icon: (
-        <GrWordpress
-          key="GrWordpress"
+        <FaWordpress
+          key="FaWordpress"
           className="dib w2 pl1 ml3 h2 br-100 white"
         />
       ),
@@ -151,25 +147,25 @@ export const RenderTags = (tagValues) => {
     {
       tagName: "aws",
       icon: (
-        <GrAmazon key="GrAmazon" className="dib w2 pl1 ml3 h2 br-100 white" />
+        <FaAmazon key="FaAmazon" className="dib w2 pl1 ml3 h2 br-100 white" />
       ),
     },
     {
       tagName: "nodejs",
-      icon: <GrNode key="GrNode" className="dib w2 pl1 ml3 h2 br-100 white" />,
+      icon: <FaNode key="FaNode" className="dib w2 pl1 ml3 h2 br-100 white" />,
     },
     {
       tagName: "github",
       icon: (
-        <GrGithub key="GrGithub" className="dib w2 pl1 ml3 h2 br-100 white" />
+        <FaGithub key="FaGithub" className="dib w2 pl1 ml3 h2 br-100 white" />
       ),
       link: "https://github.com/idkdevsa",
     },
     {
       tagName: "linkedin",
       icon: (
-        <GrLinkedin
-          key="GrLinkedin"
+        <FaLinkedin
+          key="FaLinkedin"
           className="dib w2 pl1 ml3 h2 br-100 white"
         />
       ),
@@ -180,6 +176,7 @@ export const RenderTags = (tagValues) => {
   //filter tags array by array of tag names
 
   const filteredTags = tags.filter((tag) => tagValues.includes(tag.tagName));
+
   return filteredTags.map((tag) => (
     <a key={tag.tagName} href={tag.link}>
       {tag.icon}
@@ -226,7 +223,9 @@ export const HomeBlock = ({ title, content }) => {
   return (
     <div className="fl w-100 w-50-ns pa2">
       <span className="f5 f4-ns vs-text-2-c">{title}</span>
-      <div className="pv4">{content}</div>
+      <div style={{ listStyle: "none" }} className="pv4">
+        {content}
+      </div>
     </div>
   );
 };
@@ -256,7 +255,7 @@ export const PostCard = ({
 }) => {
   return (
     <article className="br2 ba dark-gray b--black-10 mv4 w-100 w-50-m mw5 center tc">
-      <img src={imgSrc} className="db w-100 br2 br--top" alt={imgAlt} />
+      <img src={imgSrc} className="db h4 br2 br--top center" alt={imgAlt} />
       <div className="pa2 ph3-ns pb3-ns">
         <div className="dt w-100 mt1">
           <div className="dtc">
@@ -265,7 +264,11 @@ export const PostCard = ({
             </h1>
           </div>
         </div>
-        <div className="f6 lh-copy measure mt2 white">{description}</div>
+        <div className="f6 lh-copy measure mt2 white">
+          {ReactHtmlParser(
+            `${description.replace(/^(.{100}[^\s]*).*/, "$1")}...`
+          )}
+        </div>
         <div className="f4 lh-copy measure mt2 white">{tags}</div>
       </div>
     </article>
@@ -336,4 +339,8 @@ export const BottomBar = () => {
       </div>
     </footer>
   );
+};
+
+export const SidebarIcons = () => {
+  return <nav flex justify-inbetween></nav>;
 };

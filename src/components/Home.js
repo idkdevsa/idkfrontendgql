@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { withApollo } from "react-apollo";
 import gql from "graphql-tag";
 import { Link } from "react-router-dom";
@@ -78,7 +78,7 @@ const Home = (props) => {
   const [pagesPosts, setPagesPosts] = useState({ pages: [], posts: [] });
 
   // used as a authenticated GraphQL client
-  const authClient = null;
+  const authClient = useRef(null);
 
   useEffect(() => {
     executePageQuery();
@@ -88,7 +88,7 @@ const Home = (props) => {
     // initiate a authenticated client and execute a protected query
     const authToken = localStorage.getItem(AUTH_TOKEN);
     if (authToken) {
-      authClient = new ApolloClient({
+      authClient.current = new ApolloClient({
         link: createHttpLink({
           uri: Config.gqlUrl,
           headers: {

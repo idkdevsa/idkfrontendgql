@@ -1,7 +1,6 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { withApollo } from "react-apollo";
 import gql from "graphql-tag";
-import { Link } from "react-router-dom";
 
 import {
   PostCardLayout,
