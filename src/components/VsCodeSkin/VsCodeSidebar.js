@@ -38,18 +38,6 @@ const VsCodeSidebar = (props) => {
   }, [props.client]);
 
   const renderSidebar = () => {
-    const curMenu = menus.reduce(
-      (acc, el) =>
-        el.url.includes(props.curMenu)
-          ? acc.concat({
-              url: el.url,
-              label: el.label,
-              type: el.type,
-              __typename: el.__typename,
-            })
-          : acc,
-      []
-    );
     return (
       <Menu
         selectable={false}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { AiOutlineHome } from "react-icons/ai";
 import {
@@ -12,6 +12,7 @@ import {
   FaAmazon,
   FaNode,
   FaLinkedin,
+  FaLaptopCode,
 } from "react-icons/fa";
 import { GrGraphQl, GrHeroku } from "react-icons/gr";
 import SyntaxHighlighter from "react-syntax-highlighter";
@@ -203,7 +204,9 @@ export const MainLayout = ({ children }) => {
 export const ContentLayout = ({ children }) => {
   return (
     <>
-      <div className="vscodecontent overflow-y-scroll w-100">{children}</div>
+      <div className="vscodecontent ml4 overflow-y-scroll w-100">
+        {children}
+      </div>
     </>
   );
 };
@@ -341,6 +344,78 @@ export const BottomBar = () => {
   );
 };
 
-export const SidebarIcons = () => {
-  return <nav flex justify-inbetween></nav>;
+export const VsSidebar = ({ menus }) => {
+  const [menuCollapse, setMenuCollapse] = useState("collapse");
+  const [curMenu, setCurMenu] = useState("blog");
+
+  // Handle behavior of main sidebar and set current menu
+  const handleMenuCollapse = (curMenuSelection) => {
+    setMenuCollapse(
+      curMenuSelection !== curMenu && menuCollapse === "visible"
+        ? "visible"
+        : curMenuSelection !== curMenu && menuCollapse === "collapse"
+        ? "visible"
+        : curMenuSelection === curMenu && menuCollapse === "visible"
+        ? "collapse"
+        : "visible"
+    );
+    setCurMenu(curMenuSelection);
+  };
+
+  // define side bar menu icon keys
+
+  const menuItems = {
+    Blog: "blog",
+    Projects: "projects",
+  };
+
+  const menusReduced = menus.reduce(
+    (acc, el) =>
+      el.url.includes(curMenu)
+        ? acc.concat({
+            url: el.url,
+            label: el.label,
+            type: el.type,
+            __typename: el.__typename,
+          })
+        : acc,
+    []
+  );
+
+  const RenderMenu = () => {
+    return (
+      <nav
+        className="ml5 w4 vscodesidebar"
+        style={{ visibility: menuCollapse }}
+      >
+        {menusReduced.map((item, index) => {
+          return (
+            <a className="db h2" key={item.label} key={item.label}>
+              <Link to={item.url}>{item.label}</Link>
+            </a>
+          );
+        })}
+      </nav>
+    );
+  };
+
+  const RenderMenuIcons = () => {
+    return (
+      <nav className="items-start w3 mw3 vscodesidebaricons">
+        <p onClick={() => handleMenuCollapse("projects")}>
+          <FaLaptopCode style={{ fontSize: "2rem" }} />
+        </p>
+        <p onClick={() => handleMenuCollapse("blog")}>
+          <FaLaptopCode style={{ fontSize: "2rem" }} />
+        </p>
+      </nav>
+    );
+  };
+
+  return (
+    <>
+      {RenderMenuIcons()}
+      {RenderMenu()}
+    </>
+  );
 };
