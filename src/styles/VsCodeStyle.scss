@@ -191,6 +191,8 @@ $authorDateSize: 8rem;
 
 
 .vscodemain {
+    min-height: 100vh;
+
 max-height: 100vh;
 overflow: hidden;
 }
@@ -207,19 +209,22 @@ overflow: hidden;
     min-height: $minContentHeight;
     max-height: $maxContentHeight;
     background-color: #333333;
-    position: 'fixed';
+    position: fixed;
+ 
     color: $textDarkSecondary;
 }
 
 .vscodesidebar {
+    min-height: $minContentHeight;
     max-height: $maxContentHeight;
     background-color: #252526;
-    position: 'fixed';
+    position: fixed;
     border: 0;
 
 }
 
 .vscodecontent  {
+    min-height: $maxContentHeight;
     max-height: $maxContentHeight;
     background-color: $contentBg;
  }
