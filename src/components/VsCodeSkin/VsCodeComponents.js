@@ -14,6 +14,7 @@ import {
   FaLinkedin,
   FaLaptopCode,
 } from "react-icons/fa";
+import { IoIosArrowForward } from "react-icons/io";
 import { GrGraphQl, GrHeroku } from "react-icons/gr";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import ReactHtmlParser, { processNodes } from "react-html-parser";
@@ -390,8 +391,15 @@ export const VsSidebar = ({ menus }) => {
       >
         {menusReduced.map((item, index) => {
           return (
-            <a className="db h2" key={item.label} key={item.label}>
-              <Link to={item.url}>{item.label}</Link>
+            <a
+              className="db h2 link dim gray f6 f5-ns dib mr3"
+              key={item.label}
+              key={item.label}
+            >
+              <Link to={item.url}>
+                <IoIosArrowForward />
+                {item.label}
+              </Link>
             </a>
           );
         })}
