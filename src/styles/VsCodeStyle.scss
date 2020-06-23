@@ -128,6 +128,7 @@ $contentBg: #1e1e1e;
 $authorColor: #5ac983;
 $dateColor: #b79975;
 $sideBarBg: #333333; 
+$sideBarBg2: #252526;
 
 ///tachyons colours
 .vs-text-c {
@@ -213,7 +214,7 @@ overflow: hidden;
 
 .vscodesidebar {
     max-height: $maxContentHeight;
-    background-color: #252526;
+    background-color: $sideBarBg2;
     position: 'fixed';
     border: 0;
 
@@ -247,7 +248,7 @@ overflow: hidden;
 ///////////////// Menu ////////////////
 
 .vscodesidebariconsmenuitem {
-    background-color: #333333;
+    background-color: $sideBarBg;
     color: $textDarkSecondary;
     border: 0;
 }
@@ -260,11 +261,11 @@ overflow: hidden;
 }
 
 .vscodesidebarmenuitem a {
-    background-color: #333333;
+    background-color: $sideBarBg2;
     color: $textDark;
 }
 .vscodesidebarmenuitem {
-    background-color: #333333;
+    background-color: $sideBarBg2;
     border: 0;    
 }
 

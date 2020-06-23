@@ -234,9 +234,9 @@ export const PostCardLayout = ({ title, children }) => {
   return (
     <>
       <h1 className="f5 f4-ns fw6 tc white">{title}</h1>
-      <div className="flex flex-wrap justify-center">
+      <div className="flex flex-row flex-wrap justify-center">
         {children.map((child, index) => (
-          <div key={index} className="pa3 mr2">
+          <div key={index} className="flex-auto">
             {child}
           </div>
         ))}
