@@ -13,8 +13,11 @@ import {
   FaNode,
   FaLinkedin,
   FaLaptopCode,
+<<<<<<< HEAD
   FaBlog,
   FaProjectDiagram,
+=======
+>>>>>>> 9d73e86d8aae0afc194105ae270a710543c8ea71
 } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
 import { GrGraphQl, GrHeroku } from "react-icons/gr";
@@ -386,11 +389,16 @@ export const VsSidebar = ({ menus }) => {
   const RenderMenu = () => {
     return (
       <nav
+<<<<<<< HEAD
         className="flex flex-column flex-wrap vscodesidebar"
+=======
+        className="ml5 w4 vscodesidebar"
+>>>>>>> 9d73e86d8aae0afc194105ae270a710543c8ea71
         style={{ visibility: menuCollapse }}
       >
         {menusReduced.map((item, index) => {
           return (
+<<<<<<< HEAD
             <a
               className="db h2 link dim gray f6 dib "
               key={item.label}
@@ -400,6 +408,10 @@ export const VsSidebar = ({ menus }) => {
                 <IoIosArrowForward />
                 {item.label}
               </Link>
+=======
+            <a className="db h2" key={item.label} key={item.label}>
+              <Link to={item.url}>{item.label}</Link>
+>>>>>>> 9d73e86d8aae0afc194105ae270a710543c8ea71
             </a>
           );
         })}
@@ -409,6 +421,7 @@ export const VsSidebar = ({ menus }) => {
 
   const RenderMenuIcons = () => {
     return (
+<<<<<<< HEAD
       <nav className="flex flex-column flex-wrap items-center pt3 vscodesidebaricons">
         <span onClick={() => handleMenuCollapse("projects")} className="pb3">
           <FaProjectDiagram />
@@ -416,6 +429,15 @@ export const VsSidebar = ({ menus }) => {
         <span onClick={() => handleMenuCollapse("blog")}>
           <FaBlog />
         </span>
+=======
+      <nav className="items-start w3 mw3 vscodesidebaricons">
+        <p onClick={() => handleMenuCollapse("projects")}>
+          <FaLaptopCode style={{ fontSize: "2rem" }} />
+        </p>
+        <p onClick={() => handleMenuCollapse("blog")}>
+          <FaLaptopCode style={{ fontSize: "2rem" }} />
+        </p>
+>>>>>>> 9d73e86d8aae0afc194105ae270a710543c8ea71
       </nav>
     );
   };

@@ -220,16 +220,27 @@ overflow: hidden;
     font-size: 1.8rem;
     background-color: #333333;
     position: fixed;
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> 9d73e86d8aae0afc194105ae270a710543c8ea71
     color: $textDarkSecondary;
 }
 
 .vscodesidebar {
     min-height: $minContentHeight;
     max-height: $maxContentHeight;
+<<<<<<< HEAD
     background-color: $sideBarBg2;
     width: 9rem;
     margin-left: 3rem;
     position: fixed;
+=======
+    background-color: #252526;
+    position: fixed;
+    border: 0;
+
+>>>>>>> 9d73e86d8aae0afc194105ae270a710543c8ea71
 }
 
 .vscodecontent  {
