@@ -13,6 +13,8 @@ import {
   FaNode,
   FaLinkedin,
   FaLaptopCode,
+  FaBlog,
+  FaProjectDiagram,
 } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
 import { GrGraphQl, GrHeroku } from "react-icons/gr";
@@ -177,13 +179,13 @@ export const RenderTags = (tagValues) => {
 
   //filter tags array by array of tag names
 
-  const filteredTags = tags.filter((tag) => tagValues.includes(tag.tagName));
-
-  return filteredTags.map((tag) => (
-    <a key={tag.tagName} href={tag.link}>
-      {tag.icon}
-    </a>
-  ));
+  return tags
+    .filter((tag) => tagValues.includes(tag.tagName))
+    .map((tag) => (
+      <a key={tag.tagName} href={tag.link}>
+        {tag.icon}
+      </a>
+    ));
 };
 
 export const RenderLoader = () => {
@@ -199,7 +201,7 @@ export const RenderLoader = () => {
 // Layout components
 
 export const MainLayout = ({ children }) => {
-  return <div className="vscodemain">{children}</div>;
+  return <div className="vscodemain vs-primary-font lh-solid">{children}</div>;
 };
 
 export const ContentLayout = ({ children }) => {
@@ -316,18 +318,16 @@ export const PostLayout = ({
 
 export const TopBar = () => {
   return (
-    <nav className="mw-100 vs-topbar-bg overflow-hidden vscodetopbar">
-      <div className="fl w3">
+    <nav className="flex flex-row items-center mw-100 vs-topbar-bg vscodetopbar">
+      <div className="w2 mw2 tc">
         <Link to="/" title="Home">
-          <AiOutlineHome className="icon-height ml3 br-100" alt="idkdev" />
+          <AiOutlineHome className="" alt="idkdev" />
         </Link>
       </div>
-      <div className="fl mt1">
-        <span className="vs-text-c">Jason Bolton - Web Developer - </span>
-        <span className="vs-text-c">
-          <a href="mailto:jason@idkdev.co.za">Contact</a>
-        </span>
-      </div>
+      <span className="pl3 vs-text-c">Jason Bolton - Web Developer - </span>
+      <span className="flex vs-text-c">
+        <a href="mailto:jason@idkdev.co.za"> Contact</a>
+      </span>
     </nav>
   );
 };
@@ -338,7 +338,7 @@ export const BottomBar = () => {
       <div className="fl pl1 pr1 vs-secondary-bg">
         <p className="tc white">VsCodeSkin</p>
       </div>
-      <div className="flex vs-primary-bg">
+      <div className="flex flex-column vs-primary-bg">
         <p className="tc white">"// Always under construction"</p>
       </div>
     </footer>
@@ -386,13 +386,13 @@ export const VsSidebar = ({ menus }) => {
   const RenderMenu = () => {
     return (
       <nav
-        className="ml5 w4 vscodesidebar"
+        className="flex flex-column flex-wrap vscodesidebar"
         style={{ visibility: menuCollapse }}
       >
         {menusReduced.map((item, index) => {
           return (
             <a
-              className="db h2 link dim gray f6 f5-ns dib mr3"
+              className="db h2 link dim gray f6 dib "
               key={item.label}
               key={item.label}
             >
@@ -409,13 +409,13 @@ export const VsSidebar = ({ menus }) => {
 
   const RenderMenuIcons = () => {
     return (
-      <nav className="items-start w3 mw3 vscodesidebaricons">
-        <p onClick={() => handleMenuCollapse("projects")}>
-          <FaLaptopCode style={{ fontSize: "2rem" }} />
-        </p>
-        <p onClick={() => handleMenuCollapse("blog")}>
-          <FaLaptopCode style={{ fontSize: "2rem" }} />
-        </p>
+      <nav className="flex flex-column flex-wrap items-center pt3 vscodesidebaricons">
+        <span onClick={() => handleMenuCollapse("projects")} className="pb3">
+          <FaProjectDiagram />
+        </span>
+        <span onClick={() => handleMenuCollapse("blog")}>
+          <FaBlog />
+        </span>
       </nav>
     );
   };

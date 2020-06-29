@@ -128,11 +128,7 @@ $contentBg: #1e1e1e;
 $authorColor: #5ac983;
 $dateColor: #b79975;
 $sideBarBg: #333333; 
-<<<<<<< HEAD
 $sideBarBg2: #252526;
-=======
-$sideBarItemsBg: #252526;
->>>>>>> removed antd css
 
 ///tachyons colours
 .vs-text-c {
@@ -162,6 +158,13 @@ $sideBarItemsBg: #252526;
 .vs-primary-bg {
    background-color: $primaryColor;
 }
+
+.vs-primary-font {
+    a{
+        color: $primaryColor;
+    }
+    
+ }
 
 .vs-secondary-bg {
     background-color: $secondaryColor;
@@ -209,23 +212,24 @@ overflow: hidden;
 }
 
 
-
 .vscodesidebaricons {
     min-height: $minContentHeight;
     max-height: $maxContentHeight;
+    width: 3rem;
+    max-width: 3rem;
+    font-size: 1.8rem;
     background-color: #333333;
     position: fixed;
- 
     color: $textDarkSecondary;
 }
 
 .vscodesidebar {
     min-height: $minContentHeight;
     max-height: $maxContentHeight;
-    background-color: $sideBarItemsBg;
+    background-color: $sideBarBg2;
+    width: 9rem;
+    margin-left: 3rem;
     position: fixed;
-    border: 0;
-
 }
 
 .vscodecontent  {
@@ -238,6 +242,7 @@ overflow: hidden;
     height: $barHeightBottom;
     min-height: $minBarHeightBottom;
     max-height: $maxBarHeightBottom;
+    line-height: 0;
 }
 
 .vscodetopbar {
@@ -248,7 +253,7 @@ overflow: hidden;
 
 .vscodebottombarleft {
     background-color: $secondaryColor;
-    padding: 0 0.5vw 0 0.5vw;
+    // padding: 0 0.5vw 0 0.5vw;
     // line-height: $barHeightBottom;
 
 
@@ -281,14 +286,14 @@ overflow: hidden;
 .vscodetopbarmenuitem {
     background-color: $topBarBg;
     color: $textDarkSecondary;
-    line-height: $barHeightTop;
+    // line-height: $barHeightTop;
     border: 0;
 }
 
 .vscodebottombarmenuitem {
     background-color: $primaryColor;
     color: $textDark;
-    line-height: $barHeightBottom;
+    // line-height: $barHeightBottom;
 
 }
 
