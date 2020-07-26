@@ -17,13 +17,12 @@ import { GrGraphQl, GrHeroku } from "react-icons/gr";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import ReactHtmlParser, { processNodes } from "react-html-parser";
 import { anOldHope } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import ProjectLinkBox from "../ProjectLinkBox";
 
-// TODO split components to files
+// TODO split components to separate files and write tests
 
 /*
-
-Create a custom block in wordpress, from scratch or with a plugin. 
-
+ 
  Takes raw html input.
  The transform func checks tag node by name, 
  and transforms the one that matches into the specified component, which will be returned by react-html-parser.
@@ -41,6 +40,23 @@ Create a custom block in wordpress, from scratch or with a plugin.
 
 export const RenderHtml = (val) => {
   function transform(node, index) {
+    const tagValues = [
+      {
+        id: "js",
+        label: "js",
+        language: "javascript",
+      },
+      {
+        id: "bash",
+        label: "bash",
+        language: "bash",
+      },
+      {
+        id: "apache",
+        label: "apache",
+        language: "apache",
+      },
+    ];
     if (node.type === "tag" && node.name === "js") {
       return (
         <SyntaxHighlighter
@@ -184,6 +200,8 @@ export const RenderTags = (tagValues) => {
   ));
 };
 
+// Loader Component
+
 export const RenderLoader = () => {
   return (
     <div className="loader triangle">
@@ -234,7 +252,7 @@ export const PostCardLayout = ({ title, children }) => {
   return (
     <>
       <h1 className="f5 f4-ns fw6 tc white">{title}</h1>
-      <div className="flex flex-row flex-wrap justify-center">
+      <div className="flex flex-wrap justify-center">
         {children.map((child, index) => (
           <div key={index} className="flex-auto">
             {child}
@@ -299,6 +317,7 @@ export const PostLayout = ({
               backgroundImage: `url(${featuredImage})`,
             }}
           ></div>
+          <ProjectLinkBox />
         </div>
         <div className="measure f3 center mv5 black-70">
           <div className="lh-copy measure f4 f3-ns vs-text-c baskerville">
@@ -332,10 +351,15 @@ export const BottomBar = () => {
   return (
     <footer className="mw-100 vscodebottombar">
       <div className="fl pl1 pr1 vs-secondary-bg">
-        <p className="tc white">VsCodeSkin</p>
+        <p className="tc white">
+          <small>It's all ok</small>
+        </p>
       </div>
-      <div className="flex vs-primary-bg">
-        <p className="tc white">"// Always under construction"</p>
+      <div className="flex pl1 pr1 vs-primary-bg">
+        <p className="tc white">
+          Welcome! I use this site as a testing ground for new tech, if you
+          encounter a bug, don't be scared!
+        </p>
       </div>
     </footer>
   );
