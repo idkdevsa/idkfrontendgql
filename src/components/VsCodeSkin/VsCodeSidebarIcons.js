@@ -1,11 +1,80 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { Button, Menu, Layout } from "antd";
 import { CommentOutlined, UserOutlined } from "@ant-design/icons";
 import VsCodeSidebar from "./VsCodeSidebar";
+import gql from "graphql-tag";
+import { withApollo } from "react-apollo";
+import { Link } from "react-router-dom";
 
-const VsCodeSidebarIcons = () => {
+/**
+ * GraphQL menu query
+ * Gets the labels, types (internal or external) and URLs
+ */
+const MENU_QUERY = gql`
+query MenuQuery {
+	menuItems(where: {location: PRIMARY}) {
+		nodes {
+			key: id
+			parentId
+			title: label
+			url
+			}
+		}
+	}
+`;
+
+const flatListToHierarchical = (
+	data = [], {
+		idKey = 'key',
+		parentKey = 'parentId',
+		childrenKey = 'children'
+	} = {}
+) => {
+	const tree = [];
+	const childrenOf = {};
+	data.forEach((item) => {
+		const newItem = {
+			...item
+		};
+		const {
+			[idKey]: id, [parentKey]: parentId = 0
+		} = newItem;
+		childrenOf[id] = childrenOf[id] || [];
+		newItem[childrenKey] = childrenOf[id];
+		parentId
+			?
+			(
+				childrenOf[parentId] = childrenOf[parentId] || []
+			).push(newItem) :
+			tree.push(newItem);
+	});
+	return tree;
+};
+
+const VsCodeSidebarIcons = (props) => {
   const [menuCollapse, setMenuCollapse] = useState(true);
-  const [curMenu, setCurMenu] = useState("blog");
+  const [curMenu, setCurMenu] = useState('');
+	const [menus, setMenus] = useState([]);
+	const [subMenu, setSubMenu] = useState([]);
+
+	useEffect(() => {
+		const executeMenu = async () => {
+			try {
+				const result = await props.client.query({
+					query: MENU_QUERY,
+				});
+				const hierarchicalList = flatListToHierarchical(result.data.menuItems.nodes);
+				setMenus(hierarchicalList);
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		executeMenu();
+	}, [props.client]);
+
+	useEffect(() => {
+		setSubMenu(filterSubMenu(menus))
+	}, [])
 
   // Handle behavior of main sidebar and set current menu
   const handleMenuCollapse = useCallback(
@@ -24,12 +93,23 @@ const VsCodeSidebarIcons = () => {
     [curMenu, menuCollapse]
   );
 
-  // define side bar menu icon keys
-
-  const menuItems = {
-    Blog: "blog",
-    Projects: "projects",
-  };
+	function filterSubMenu (menus) {
+		let subMenuObj = [];
+		for(let menu of menus) {
+			console.log(menu)
+			// console.log(curMenu)
+					if (menu.title == curMenu) {
+						for(let child of menu.children) {
+							const subMenuUrl = child.url ? child.url.replace('https://idkdev.co.za/', '') : '#';
+							subMenuObj.push( {
+								title: child.title,
+								url: subMenuUrl,
+							})
+						}
+				}
+			};
+			return subMenuObj;
+	}
 
   return (
     <>
@@ -39,20 +119,18 @@ const VsCodeSidebarIcons = () => {
           selectable={false}
           onClick={({ key }) => handleMenuCollapse(key)}
         >
-          <Menu.Item key={menuItems.Blog}>
+					{menus.map((item, index) => {
+          return (
+					<Menu.Item key={item.title}>
             <Button
               type="link"
               ghost
               icon={<CommentOutlined style={{ fontSize: "2rem" }} />}
             />
           </Menu.Item>
-          <Menu.Item key={menuItems.Projects}>
-            <Button
-              type="link"
-              ghost
-              icon={<UserOutlined style={{ fontSize: "2rem" }} />}
-            />
-          </Menu.Item>
+					)
+					})
+				}
         </Menu>
       </Layout.Sider>
       <Layout.Sider
@@ -62,10 +140,19 @@ const VsCodeSidebarIcons = () => {
         trigger={null}
         collapsedWidth={0}
       >
-        <VsCodeSidebar setMenuCollapse={setMenuCollapse} curMenu={curMenu} />
+        < VsCodeSidebar setMenuCollapse = {
+        	setMenuCollapse
+        }
+        curMenu = {
+        	curMenu
+        }
+        subMenu = {
+        	filterSubMenu(menus)
+        }
+        />
       </Layout.Sider>
     </>
   );
 };
 
-export default VsCodeSidebarIcons;
+export default withApollo(VsCodeSidebarIcons);
